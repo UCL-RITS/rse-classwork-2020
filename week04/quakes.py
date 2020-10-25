@@ -12,13 +12,13 @@ import json
 if __name__ == "__main__":
     quakes = requests.get("http://earthquake.usgs.gov/fdsnws/event/1/query.geojson",
                       params={
-                          'starttime': "2000-01-01",
+                          'starttime': "1901-01-01",
                           "maxlatitude": "58.723",
                           "minlatitude": "50.008",
                           "maxlongitude": "1.67",
                           "minlongitude": "-9.756",
                           "minmagnitude": "1",
-                          "endtime": "2020-10-25",
+                          "endtime": "2000-12-31",
                           "orderby": "time-asc"}
                       )
     # parsing the data as JSON
@@ -31,7 +31,6 @@ if __name__ == "__main__":
     max_mag_pos = [ i for i in range(len(mag_list)) if mag_list[i] == max_mag] 
     # finding the coordinates corresponding to maximum earthquake magnitude
     coordinates_max = [quakes_json['features'][max_mag_pos[i]]['geometry']['coordinates'] for i in range(len(max_mag_pos))]
-    
+        
     print(f"There is {len(max_mag_pos)} event(s) with a maximum magnitude of {max_mag}")
     print("These event(s) occured at coordinates:", {(coordinates_max[i][0],coordinates_max[i][1]) for i in range(len(coordinates_max))})
-    

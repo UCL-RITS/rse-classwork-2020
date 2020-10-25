@@ -2,12 +2,8 @@
 
 # At the top of the file, import any libraries you will use.
 # import ...
-
+import json 
 import requests
-import numpy as np
-import json
-
-
 # If you want, you can define some functions to help organise your code.
 # def helper_function(argument_1, argument_2):
 #   ...
@@ -27,7 +23,7 @@ def find_earthquake():
                     "maxlongitude": "1.67",
                     "minlongitude": "-9.756",
                     "minmagnitude": "1",
-                    "endtime": "20-10-11",
+                    "endtime": "2020-10-11",
                     "orderby": "time-asc" })
 
     # print(quakes_json.keys())
@@ -39,23 +35,35 @@ def find_earthquake():
         quakes_mag_list.append(magnitude)
 
     max_magnitude = max(quakes_mag_list)
-    index = quakes_mag_list.index(max_magnitude)
-    coords = quakes_json['features'][index]['geometry']['coordinates']
 
-    print(coords)
+    coords_list = []
 
-    return max_magnitude, coords
+    # 2 found to be max magnitude so 2 different places 
+    for feature in quakes_json['features']:
+        if feature['properties']['mag'] == max_magnitude:
+            coord = feature['geometry']['coordinates']
+            coords_list.append(coord)
+
+    # index = quakes_mag_list.index(max_magnitude)
+    # coords = quakes_json['features'][index]['geometry']['coordinates']
+
+    # print(coords)
+    return max_magnitude, coords_list
 
 # When you run the file, it should print out the location and magnitude
 # of the biggest earthquake.
 # You can run the file with `python quakes.py` from this directory.
 if __name__ == "__main__":
     # ...do things here to find the results...
-    
-    
+      
     [max_magnitude, coords] = find_earthquake()
+  
 
     # The lines below assume that the results are stored in variables
     # named max_magnitude and coords, but you can change that.
-    print(f"The maximum magnitude is {max_magnitude} "
-          f"and it occured at coordinates {coords}.")
+
+    print(f'The maximum magnitude is {max_magnitude} '
+          f'and it occured at coordinates {coords}.')
+
+    
+

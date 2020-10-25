@@ -6,7 +6,7 @@ if __name__ == "__main__":
 
     quakes = requests.get("http://earthquake.usgs.gov/fdsnws/event/1/query.geojson",
                       params={
-                          'starttime': "2000-01-01",
+                          'starttime': "1900-01-01", 
                           "maxlatitude": "58.723",
                           "minlatitude": "50.008",
                           "maxlongitude": "1.67",

@@ -52,4 +52,4 @@ if __name__ == "__main__":
     # The lines below assume that the results are stored in variables
     # named max_magnitude and coords, but you can change that.
     print(f"The maximum magnitude is {max_magnitude} "
-          f"and it occured at coordinates {coords}.")
+          f"and it occurred at coordinates {coords}.")

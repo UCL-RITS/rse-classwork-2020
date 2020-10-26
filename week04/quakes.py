@@ -10,13 +10,13 @@ import json
 if __name__ == "__main__":
     quakes = requests.get("http://earthquake.usgs.gov/fdsnws/event/1/query.geojson",
                       params={
-                          'starttime': "2000-01-01",
+                          'starttime': "1900-01-01",
                           "maxlatitude": "58.723",
                           "minlatitude": "50.008",
                           "maxlongitude": "1.67",
                           "minlongitude": "-9.756",
                           "minmagnitude": "1",
-                          "endtime": "2020-10-25",
+                          "endtime": "1999-12-31",
                           "orderby": "time-asc"}
                       )
 #initialize variables for the loop

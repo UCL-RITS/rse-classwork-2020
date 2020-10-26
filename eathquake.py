@@ -10,8 +10,5 @@ quakes = requests.get("http://earthquake.usgs.gov/fdsnws/event/1/query.geojson",
                           "endtime": "2018-10-11",
                           "orderby": "time-asc"}    ).text
 import json 
-json.dumps(quakes)
-with open('quakes.json') as json_quakes_in:
-    quakes_again = json.load(json_quakes_in)
 
-new_dict = {key: val for key, val in quakes_again.items() if val > 2}
+json_data = json.loads(quakes.text)

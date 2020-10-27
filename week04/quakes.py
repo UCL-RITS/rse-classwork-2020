@@ -1,3 +1,4 @@
+
 import json
 import requests
 import numpy as np
@@ -37,4 +38,4 @@ max_quake = max_quake.reset_index(drop=True)
 for index, quake in max_quake.iterrows():
     # Print the strongest earthquake
     print(f"The maximum magnitude is {quake['properties.mag']} "
-          f"and it occured for the {integer_engine.ordinal(index + 1)} time at {quake['geometry.coordinates']}.")
+          f"and it occured for the {integer_engine.ordinal(index + 1)} time at ({', '.join(str(x) for x in quake['geometry.coordinates'][0:2])}) at {quake['geometry.coordinates'][2]} kilometres deep.")

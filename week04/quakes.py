@@ -3,7 +3,22 @@
 # At the top of the file, import any libraries you will use.
 import requests 
 import json
+from IPython.display import Image 
 
+def request_map(lat, longi):
+    """
+    Function that generates the map at specific coordinate where earthquake occured
+    Input: Latitude and longitudinal coordinates 
+    """
+    website = requests.get("https://static-maps.yandex.ru/1.x/?",
+                        params={
+                            'size': '400,400',
+                            'll': '{}.{}'.format(longi,lat),
+                            'zoom': 10,
+                            'l': 'sat',
+                            'lang': 'en_US'
+                        })
+    return website
 
 # When you run the file, it should print out the location and magnitude
 # of the biggest earthquake.
@@ -55,7 +70,6 @@ if __name__ == "__main__":
         place.append(earthquake['properties']['place'])
         coords.append(earthquake['geometry']['coordinates'])
 
-
     #Finding maximum magnitude 
     max_magnitude= max(mag)
     index = mag.index(max_magnitude)
@@ -65,4 +79,8 @@ if __name__ == "__main__":
     print(f"The maximum magnitude is {max_magnitude} "
           f"and it occured at coordinates {coords[index]}"
           f" at place: {place[index]}.")
-    pass
+    
+    #Printing map:
+
+    map = request_map(place[index][0], place[index][1])
+    Image(map.content)

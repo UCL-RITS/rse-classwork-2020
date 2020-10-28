@@ -1,4 +1,6 @@
 """A script to find the biggest earthquake in an online dataset."""
+import json
+import requests
 
 # At the top of the file, import any libraries you will use.
 # import ...
@@ -13,7 +15,26 @@
 if __name__ == "__main__":
     # ...do things here to find the results...
 
-    # The lines below assume that the results are stored in variables
-    # named max_magnitude and coords, but you can change that.
+    # retrieve the json data
+    quakes = requests.get("http://earthquake.usgs.gov/fdsnws/event/1/query.geojson", params={
+                          'starttime': "2000-01-01",
+                          "maxlatitude": "58.723",
+                          "minlatitude": "50.008",
+                          "maxlongitude": "1.67",
+                          "minlongitude": "-9.756",
+                          "minmagnitude": "1",
+                          "endtime": "2018-10-11",
+                          "orderby": "time-asc"})
+
+    # parse the json data
+    raw_data = json.loads(quakes.text) 
+    qdata = raw_data["features"] 
+
+    # list comprehension used to find the maximum magnitude and the corresponding coordinates
+    max_magnitude = max([x["properties"]["mag"] for x in qdata])
+    coords= [x["geometry"]["coordinates"] for x in qdata if x["properties"]["mag"]==max_magnitude]
+
+
+    # display the results
     print(f"The maximum magnitude is {max_magnitude} "
           f"and it occured at coordinates {coords}.")

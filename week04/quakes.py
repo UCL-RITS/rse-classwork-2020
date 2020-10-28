@@ -34,6 +34,12 @@ quakes = requests.get("http://earthquake.usgs.gov/fdsnws/event/1/query.geojson",
                           "orderby": "time-asc"}
                       )
 
+# Here, I am extracting the dictionaries from a json file. 
+# this would not have worked if it was not a json file
+# To check if it was json, I could have said:
+# with open ('quakes.json','w') as json_file 
+#   json_file.write(quakes.text)
+
 quake_data = json.loads(quakes.text)
 print(json.dumps(quake_data, indent = 4))
 

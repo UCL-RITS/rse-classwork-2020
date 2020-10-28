@@ -63,7 +63,7 @@ def get_max_mag_quake_detail(json_file):
     return max_mag, coords
 
 
-def request_map_at(lat, long, satellite=True,
+def request_map_at(lat, long, satellite=False,
                    zoom=10, size=(400, 400)):
     base = "https://static-maps.yandex.ru/1.x/?"
   
@@ -85,7 +85,7 @@ if __name__ == "__main__":
     print(f"The maximum magnitude is {max_mag} "
         f"and it occured at coordinates {coords}.")
     
-    map_response = request_map_at(coords[0][0],coords[0][1])
+    map_response = request_map_at(coords[0][1],coords[0][0])
     print(map_response.url)
     im = Image.open(requests.get(map_response.url, stream=True).raw)
     plt.imshow(im)

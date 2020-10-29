@@ -5,6 +5,10 @@
 
 import yaml
 import requests
+import datetime
+import numpy as np
+import matplotlib.pyplot as plt
+
 
 quakes = requests.get("http://earthquake.usgs.gov/fdsnws/event/1/query.geojson",
                       params={
@@ -26,6 +30,8 @@ current_place=[]
 current_mag=[]
 each_quake=[]
 current_coord=[]
+date_time=[]
+
 
 for i in range(k):
 
@@ -34,6 +40,22 @@ for i in range(k):
     current_place+=[each_quake['properties']['place']]
     current_mag+=[each_quake['properties']['mag']]
     current_coord+=[each_quake['geometry']['coordinates']]
+    
+    date_time.append(datetime.datetime.fromtimestamp((each_quake['properties']['time'])/1000).year)
+date_counter=np.zeros(len(np.unique(date_time)))
+date_mag=np.zeros(len(np.unique(date_time)))
+
+for counter,date in enumerate(np.unique(date_time)):
+    for i in range(len(date_time)):
+        if date == date_time[i]:
+            date_counter[counter]+=1
+            date_mag[counter]+=current_mag[i]
+average_mag=date_mag/date_counter
+
+plt.plot(np.unique(date_time),date_counter,label="frequency per year")
+
+plt.plot(np.unique(date_time),average_mag,label="average_mag")
+plt.legend()
 
 biggest=max(current_mag)
 chosen=[]

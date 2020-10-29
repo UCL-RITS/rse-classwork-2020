@@ -2,6 +2,10 @@
 
 import requests
 import json
+import matplotlib.pyplot as plt
+import numpy as np
+import datetime
+import pprint 
 
 # At the top of the file, import any libraries you will use.
 # import ...
@@ -41,7 +45,7 @@ quakes = requests.get("http://earthquake.usgs.gov/fdsnws/event/1/query.geojson",
 #   json_file.write(quakes.text)
 
 quake_data = json.loads(quakes.text)
-# print(json.dumps(quake_data, indent = 4))
+#print(json.dumps(quake_data, indent = 4))
 
 # Finding the biggest magnitude 
 different_quake_group = quake_data['features']
@@ -66,27 +70,54 @@ for i in range(len(all_quake_mag)):
     else:
         pass
 
-print(all_max_mag_index)
+#print(all_max_mag_index)
 
-# Finding the location of earthquake with max magnitude
+# Finding the location of earthquake with max magnitude, and also the latitude and longitude 
 all_coords = []
 for i in range(len(all_max_mag_index)):
     coords = different_quake_group[i]['geometry']['coordinates']
     all_coords.append(coords)
 
-print(all_coords)
+#print(all_coords)
+
+#print(f"The maximum magnitude is {max_mag} "
+#      f"and it occured at coordinates {all_coords}.")
+
+# Plotting the earthquake dataset
+
+mag_dict = {}
+years = []
+mag_avg = []
+mag_freq = []
+
+for every_quake in quake_data['features']:
+    time = every_quake['properties']['time']
+    mag = every_quake['properties']['mag']
+    year = datetime.datetime.fromtimestamp(time/1000).year
+
+    if year in mag_dict.keys():
+        mag_dict[year].append(mag)
+    else:
+        mag_dict[year] = [mag]
+
+#pprint.pprint(mag_dict) 
+
+for every_year in mag_dict.keys():
+    years.append(every_year)
+    mag_average = sum(mag_dict[every_year])/len(mag_dict[every_year])
+    mag_avg.append(mag_average)
+    frequency = len(mag_dict[every_year])
+    mag_freq.append(frequency)
+
+plt.plot(years,mag_avg)
+plt.xlabel('years')
+plt.xticks(np.arange(min(years),max(years)+1, 1.0))
+plt.ylabel('average magnitude')
+plt.show()
 
 
-print(f"The maximum magnitude is {max_mag} "
-      f"and it occured at coordinates {all_coords}.")
-
-
-
-
-
-
-
-
-
-
-
+plt.bar(years,mag_freq)
+plt.xlabel('years')
+plt.xticks(np.arange(min(years),max(years)+1, 1.0))
+plt.ylabel('frequency')
+plt.show()

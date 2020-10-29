@@ -41,7 +41,7 @@ quakes = requests.get("http://earthquake.usgs.gov/fdsnws/event/1/query.geojson",
 #   json_file.write(quakes.text)
 
 quake_data = json.loads(quakes.text)
-print(json.dumps(quake_data, indent = 4))
+# print(json.dumps(quake_data, indent = 4))
 
 # Finding the biggest magnitude 
 different_quake_group = quake_data['features']
@@ -53,14 +53,32 @@ for quake in different_quake_group:
 
 max_mag = max(all_quake_mag)
 
-# Finding the index of max magnitude
-index = all_quake_mag.index(max_mag)
+# print(max_mag)
+# print(all_quake_mag)
+
+# Finding the index of max magnitude - fail 
+all_max_mag_index = []
+for i in range(len(all_quake_mag)):
+    every_magnitude = all_quake_mag[i]
+    if every_magnitude == max_mag: 
+       max_mag_index = i
+       all_max_mag_index.append(max_mag_index) 
+    else:
+        pass
+
+print(all_max_mag_index)
 
 # Finding the location of earthquake with max magnitude
-coords = different_quake_group[index]['geometry']['coordinates']
+all_coords = []
+for i in range(len(all_max_mag_index)):
+    coords = different_quake_group[i]['geometry']['coordinates']
+    all_coords.append(coords)
+
+print(all_coords)
+
 
 print(f"The maximum magnitude is {max_mag} "
-      f"and it occured at coordinates {coords}.")
+      f"and it occured at coordinates {all_coords}.")
 
 
 

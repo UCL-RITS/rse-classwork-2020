@@ -16,8 +16,8 @@ def request_map_at(lat, long, zoom=10, satellite=True):
     params = dict(
         x=int(x_coord),
         y=int(y_coord),
-        z=zoom)
-
+        z=zoom
+    )
     if satellite:
         params['lyrs'] = 's'
 
@@ -32,7 +32,7 @@ def deg2num(lat_deg, lon_deg, zoom):
     return (xtile, ytile)
 
 
-def main():
+def get_data():
     quakes = requests.get("http://earthquake.usgs.gov/fdsnws/event/1/query.geojson",
                           params={
                               'starttime': "2000-01-01",
@@ -44,16 +44,12 @@ def main():
                               "endtime": "2018-10-11",
                               "orderby": "time-asc"}
                           )
+    return quakes
 
-    earthquake_data = json.loads(quakes.text)
 
-    # extracting the features from the data (which has all earthquake data)
-    features = earthquake_data["features"]
-
+def max_magnitude(features):
     max_mag = 0
     coord_max_mag = []
-
-    # looping though
     for feature in features:
         magnitude = feature["properties"]["mag"]
         coordinates = feature["geometry"]["coordinates"]
@@ -63,11 +59,25 @@ def main():
                 coord_max_mag.append(coordinates)
             else:
                 coord_max_mag = coordinates
+    return max_mag, coord_max_mag
 
+
+def main():
+    # getting earthquake data from URL
+    quakes = get_data()
+    # parsing data
+    earthquake_data = json.loads(quakes.text)
+    # extracting features from data (where earthquake mag and coordinates located)
+    features = earthquake_data["features"]
+    # looking for coordinates where max magnitude occurs
+    max_mag, coord_max_mag = max_magnitude(features)
+    # generating URLs for map
     for coordinate in coord_max_mag:
         map_response = request_map_at(coordinate[0], coordinate[1])
         url = map_response.url
         print(url[0:])
+
+    # Image(map_png.content)
 
     print(f"The maximum magnitude is {max_mag} "
           f"and it occured at coordinates {coord_max_mag}.")
@@ -75,3 +85,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+    #print(json.dumps(earthquake_data, indent=4))

@@ -49,6 +49,7 @@ if __name__ == "__main__":
     plt.xlabel('Years')
     plt.ylabel('Frequency')
     plt.title('Earthquake Frequency in the UK')
+    plt.xticks(sorted_array[::2,0])
     plt.show()
     #print(frequency_per_year)
 

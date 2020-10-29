@@ -10,6 +10,18 @@ from datetime import datetime
 # We use inflect to convert 1 into "1st", 2 into "2nd" etc
 integer_engine = inflect.engine()
 
+
+###################################################################
+# This code is split into 3 sections
+#    1. Download data and parse it
+#    2. Find and print strongest earthquakes
+#    3. Plot details of earthquake size and mean magnitude by year
+###################################################################
+
+###################################################################
+## Section 1 - load data and parse it into a dataframe
+###################################################################
+
 # Load the data from the USGS earthquake service
 quakes = requests.get("http://earthquake.usgs.gov/fdsnws/event/1/query.geojson",
                       params={
@@ -29,6 +41,10 @@ quakes_object = json.loads(quakes.text)
 # Now convert all the earthquakes into a pandas dataframe
 quakes_dataframe = pd.json_normalize(quakes_object['features'])
 
+###################################################################
+## Section 2 - find and print strongest earthquakes
+###################################################################
+
 # Get the row in the dataframe that corresponds to the strongest quake
 max_quake = quakes_dataframe[quakes_dataframe['properties.mag'] == quakes_dataframe['properties.mag'].max()]
 
@@ -40,6 +56,10 @@ for index, quake in max_quake.iterrows():
     # Print the strongest earthquake
     print(f"The maximum magnitude is {quake['properties.mag']} "
           f"and it occured for the {integer_engine.ordinal(index + 1)} time at ({', '.join(str(x) for x in quake['geometry.coordinates'][0:2])}) at {quake['geometry.coordinates'][2]} kilometres deep.")
+
+###################################################################
+## Section 3 - plot by year, the number and mean quake magnitude
+###################################################################
 
 # Convert milisecond unix timestamp to datetime
 quakes_dataframe['properties.time'] = quakes_dataframe['properties.time'].apply(lambda x: datetime.fromtimestamp(x/1000))

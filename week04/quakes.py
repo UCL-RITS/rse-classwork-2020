@@ -4,6 +4,10 @@
 # import ...
 import json
 import requests
+import datetime
+import matplotlib.pyplot as plt
+from collections import Counter
+
 # If you want, you can define some functions to help organise your code.
 # def helper_function(argument_1, argument_2):
 #   ...
@@ -25,18 +29,36 @@ if __name__ == "__main__":
                           "orderby": "time-asc"}
                       )
 quake_data = json.loads(quakes.text)
-    #print(json.dumps(quake_data, indent = 4))
+#print(json.dumps(quake_data, indent = 4))
 
 magnitude=[]
+times=[]
 for quake in quake_data['features']:
     magnitude.append(quake['properties']['mag'])
+    time=datetime.datetime.fromtimestamp(quake['properties']['time']/1000).strftime('%Y')
+    times.append(time)
+    
 max_magnitude = max(magnitude)
 index = magnitude.index(max_magnitude)  
 coords = quake_data['features'][index]['geometry']['coordinates']
 place = quake_data['features'][index]['properties']['place']
 
+q = Counter(times)
 
+
+plt.plot(q.keys(), q.values())
+plt.title('Number of quakes per year')
+plt.xlabel("Year")
+plt.ylabel("Number of quakes")
+
+plt.show()
+
+
+
+#print(times)
     # The lines below assume that the results are stored in variables
     # named max_magnitude and coords, but you can change that.
 print(f"The maximum magnitude is {max_magnitude} "
           f"and it occured at coordinates {coords} in {place}.")
+
+

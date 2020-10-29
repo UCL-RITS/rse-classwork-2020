@@ -46,10 +46,16 @@ if __name__ == "__main__":
 
     maglocdata = get_quake_mag_loc(load_as_json(quakes))
 
-    # Get maximum from array data
-    max_magnitude, coords = [np.max(maglocdata, axis=0)[0], np.max(maglocdata, axis=0)[1]]
+    # Get maximum value from array data
+    max_magnitude = np.max(maglocdata, axis=0)[0]
     
+    # Find index of maxima in list
+    maxidx  = np.argwhere(maglocdata[:,0]==max_magnitude)
+
+    print('Number of maxima found : ',len(maxidx))
+
     # The lines below assume that the results are stored in variables
     # named max_magnitude and coords, but you can change that.
     print(f"The maximum magnitude is {max_magnitude} "
-          f"and it occurred at coordinates {coords}.")
+          f"and it occurred at coordinates {maglocdata[maxidx[0]][0][1], maglocdata[maxidx[1]][0][1]}.")
+

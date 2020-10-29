@@ -6,6 +6,7 @@ import pandas as pd
 import inflect
 import matplotlib.pyplot as plt
 from datetime import datetime
+from scipy import stats
 
 # We use inflect to convert 1 into "1st", 2 into "2nd" etc
 integer_engine = inflect.engine()
@@ -65,7 +66,7 @@ for index, quake in max_quake.iterrows():
 quakes_dataframe['properties.time'] = quakes_dataframe['properties.time'].apply(lambda x: datetime.fromtimestamp(x/1000))
 
 # Group by year and get the mean magnitude and number of magnitudes
-yearly_quakes = quakes_dataframe['properties.mag'].groupby(quakes_dataframe['properties.time'].dt.year).agg(['mean', 'count'])
+yearly_quakes = quakes_dataframe['properties.mag'].groupby(quakes_dataframe['properties.time'].dt.year).agg(['mean', 'count', stats.sem])
 
 # Get list of years
 years = yearly_quakes.index.tolist();
@@ -75,7 +76,7 @@ xtick_years = np.append(np.arange(np.min(years), np.max(years), step=5), np.max(
 
 # Plot mean magnitude of quakes each year
 f = plt.figure()
-plt.plot(years, yearly_quakes['mean'])
+plt.errorbar(years, yearly_quakes['mean'], yearly_quakes['sem'], capsize=3)
 
 # Configure axes
 plt.xticks(xtick_years)

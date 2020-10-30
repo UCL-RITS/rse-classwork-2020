@@ -11,3 +11,39 @@ def test_given_input():
   
     assert result == expected
 
+def test_no_overlap_helper():
+    assert(
+        times.compute_overlap_helper(
+            ('2010-01-12 10:30:00', '2010-01-12 10:37:00'), 
+            ('2010-01-12 10:38:00', '2010-01-12 12:20:00')
+        ) 
+        == tuple()
+    )
+
+def test_edge_overlap_helper():
+    assert(
+        times.compute_overlap_helper(
+            ('2010-01-12 10:30:00', '2010-01-12 10:37:00'),
+            ('2010-01-12 10:30:00', '2010-01-12 10:35:00')
+        )
+        == ('2010-01-12 10:30:00', '2010-01-12 10:35:00')
+    )
+
+def test_partial_overlap_helper():
+    assert(
+        times.compute_overlap_helper(
+            ('2010-01-12 10:30:00', '2010-01-12 10:37:00'),
+            ('2010-01-12 10:34:00', '2010-01-12 10:42:00')
+        )
+        == ('2010-01-12 10:34:00', '2010-01-12 10:37:00')
+    )
+
+def test_subset_overlap_helper():
+    assert(
+        times.compute_overlap_helper(
+            ('2010-01-12 10:30:00', '2010-01-12 10:37:00'),
+            ('2010-01-12 10:32:00', '2010-01-12 10:36:30')
+        )
+        == ('2010-01-12 10:32:00', '2010-01-12 10:36:30')
+    )
+

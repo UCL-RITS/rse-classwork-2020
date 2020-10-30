@@ -34,6 +34,7 @@ if __name__ == "__main__":
     # counting the occurance of each year
     time_list_year_unique = np.unique(time_list_year,return_counts=True)
     
+    ####### Frequency of Earthquakes per Year ###################
     # Plotting Frequency vs Year
     plt.figure()
     plt.bar(time_list_year_unique[0],time_list_year_unique[1])
@@ -41,3 +42,27 @@ if __name__ == "__main__":
     plt.xlabel("Year")
     plt.ylabel("Frequency")
     plt.savefig("EarthquakeFreq00to20.png")
+
+    ###### Average Magnitude of Earthquakes per Year ##############
+
+    # extracting mag and year 
+    year_mag = [[datetime.date.fromtimestamp(time_list[i]/1000).year for i in range(quakes_json['metadata']['count'])],
+                    [quakes_json['features'][i]['properties']['mag'] for i in range(quakes_json['metadata']['count'])]]
+    
+    # using a dictionary to group together earthquake magnitudes in the same year 
+    year_mag_dict={}
+    for i in range(len(year_mag[0])):
+        if year_mag[0][i] not in year_mag_dict: # creating an entry when approaching a new year
+            year_mag_dict[year_mag[0][i]] = [year_mag[1][i]]
+        else: # inserting an additional entry if year is already present
+            year_mag_dict[year_mag[0][i]].append(year_mag[1][i])
+    # calculating average magnitude for each year
+    average_mag = [np.average(year_mag_dict[i]) for i in time_list_year_unique[0]]
+
+    # Plotting Average Freq vs Year
+    plt.figure()
+    plt.bar(time_list_year_unique[0],average_mag)
+    plt.title("Average Magnitude of Earthquakes in the UK between 2000-2020")
+    plt.xlabel("Year")
+    plt.ylabel("Average Magnitude")
+    plt.savefig("EarthquakeAvMagnitude00to20.png")

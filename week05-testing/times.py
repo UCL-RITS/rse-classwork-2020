@@ -21,8 +21,8 @@ def compute_overlap_time(range1, range2):
     return overlap_time
 
 large = time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00")
-short = time_range("2010-01-12 10:30:00", "2010-01-12 12:45:00", 2, 60)
-print(3/2)
-print(large)
-print(short)
-print(compute_overlap_time(large, short))
+short = time_range("2010-01-12 12:30:00", "2010-01-12 12:45:00", 2, 60)
+
+large = time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00")
+short = time_range("2010-01-12 10:30:00", "2010-01-12 10:45:00", 2, 60)
+

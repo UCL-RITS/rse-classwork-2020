@@ -44,6 +44,8 @@ if __name__ == "__main__":
 
     # The lines below assume that the results are stored in variables
     # named max_magnitude and coords, but you can change that.
-    print(f"The maximum magnitude is {maxmag} "
-          f"and it occured at coordinates {coords}, "
-          f"in {place}.")
+    #print(f"The maximum magnitude is {maxmag} "
+        #  f"and it occured at coordinates {coords}, "
+        #  f"in {place}.")
+
+    print('the max mag was at', maxmag, 'at coords', coords, 'in', place)

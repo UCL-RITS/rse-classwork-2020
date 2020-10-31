@@ -20,13 +20,32 @@ def test_no_overlap_helper():
         == tuple()
     )
 
-def test_edge_overlap_helper():
+def test_inside_edge_overlap_helper():
     assert(
         times.compute_overlap_helper(
             ('2010-01-12 10:30:00', '2010-01-12 10:37:00'),
             ('2010-01-12 10:30:00', '2010-01-12 10:35:00')
         )
         == ('2010-01-12 10:30:00', '2010-01-12 10:35:00')
+    )
+
+
+def test_same_overlap_helper():
+    assert(
+        times.compute_overlap_helper(
+            ('2010-01-12 10:30:00', '2010-01-12 10:37:00'),
+            ('2010-01-12 10:30:00', '2010-01-12 10:37:00')
+        )
+        == ('2010-01-12 10:30:00', '2010-01-12 10:37:00')
+    )
+
+def test_outside_edge_overlap_helper():
+    assert(
+        times.compute_overlap_helper(
+            ('2010-01-12 10:30:00', '2010-01-12 10:37:00'),
+            ('2010-01-12 10:37:00', '2010-01-12 10:39:00')
+        )
+        == tuple()
     )
 
 def test_partial_overlap_helper():

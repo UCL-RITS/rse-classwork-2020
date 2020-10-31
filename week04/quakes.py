@@ -32,6 +32,7 @@ year_list = []
 mag_dict = {}
 years = []
 mag_avg = []
+freq = []
 
 for f in quakes['features']:
     t = f['properties']['time']
@@ -47,13 +48,17 @@ for f in quakes['features']:
 for k in mag_dict.keys():
     years.append(k)
     mag_avg.append(sum(mag_dict[k])/len(mag_dict[k]))
+    freq.append(len(mag_dict[k]))
 
 plt.hist(year_list, bins=18)
 plt.xticks(range(min(year_list), max(year_list)+1))
 plt.xlabel('year')
 plt.ylabel('frequency')
 plt.show()
-print(year_list)
+
+plt.bar(years, freq)
+plt.xticks(range(min(year_list), max(year_list)+1))
+plt.show()
 
 plt.plot(years, mag_avg)
 plt.xticks(range(min(year_list), max(year_list)+1))

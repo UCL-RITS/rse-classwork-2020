@@ -12,7 +12,9 @@ import json
 import requests
 import matplotlib.pyplot as plt
 from PIL import Image
-
+import numpy as np
+from collections import defaultdict
+from statistics import mean 
 def get_quake_data_from_URL():
     quakes = requests.get("http://earthquake.usgs.gov/fdsnws/event/1/query.geojson",
                           params={
@@ -53,40 +55,72 @@ def get_max_mag_quake_detail(json_file):
             d = datetime.fromtimestamp(x / 1000).strftime('%Y-%m-%d')
             quake_detail.append([features[i]['properties']['mag'],d,features[i]['properties']['place'],features[i]['geometry']['coordinates'] ])
     
-    max_magnitude = [quake_detail[i] for i in range(len(quake_detail)) if max([sublist[0] for sublist in quake_detail]) == quake_detail[i][0] ]
+    return quake_detail
+
+def draw_freq(magnitude, dates):
+
+    bins = np.arange(min(dates), max(dates)+1)
+    plt.figure(figsize = (10,5))    
+    plt.title('Frequency of Quakes per Year')
+    plt.xlabel('Year')
+    plt.ylabel('Frequency')
+    plt.xticks(bins)
+    plt.yticks(range(21))
+    plt.grid(linestyle='dotted', linewidth=1) 
+    plt.hist(dates, bins-0.5, rwidth = 0.75)
     
-    max_mag = max_magnitude[0][0]
-    #dates = [each_quake[1] for each_quake in max_magnitude]
-    #places = [each_quake[2] for each_quake in max_magnitude]
-    coords = [each_quake[3] for each_quake in max_magnitude]
+    return plt.savefig('Frequency.png')
 
-    return max_mag, coords
+def draw_mean_mag_bar(magnitude, dates):
+
+    d = defaultdict(list)
+    for key, value in zip(dates, magnitude):
+        d[key].append(value)
+
+    years = [key for key in dict(d)]
+    mean_mag = [round(mean(values),2) for key, values in dict(d).items()]
+
+    plt.figure(figsize = (10,10))    
+    plt.bar(years, height = mean_mag)
+    plt.xticks(years)
+    plt.yticks(mean_mag)
+    plt.xlabel('Year')
+    plt.ylabel('Mean Magnitude')
+    plt.title('Average Magnitude of Quakes by Year')
+    plt.ylim(min(mean_mag)-0.05)
+    plt.grid(linestyle='dotted', linewidth=1)
+
+    return plt.savefig('Mean_magnitude_bar.png')
 
 
-def request_map_at(lat, long, satellite=False,
-                   zoom=10, size=(400, 400)):
-    base = "https://static-maps.yandex.ru/1.x/?"
-  
-    params = dict(
-        z = zoom,
-        size = str(size[0]) + "," + str(size[1]),
-        ll = str(long) + "," + str(lat),
-        l = "sat" if satellite else "map",
-        lang = "en_US"
-    )
+def draw_mean_mag_line(magnitude, dates):
 
-    return requests.get(base,params=params)
+    d = defaultdict(list)
+    for key, value in zip(dates, magnitude):
+        d[key].append(value)
+
+    years = [key for key in dict(d)]
+    mean_mag = [round(mean(values),2) for key, values in dict(d).items()]
+
+    plt.figure(figsize = (10,5))   
+    plt.xticks(years)
+    plt.yticks(mean_mag)
+    plt.xlabel('Year')
+    plt.ylabel('Mean Magnitude')
+    plt.title('Average Magnitude of Quakes by Year')  
+    plt.grid(linestyle='dotted', linewidth=1) 
+    plt.plot(years, mean_mag)
+
+    return plt.savefig('Mean_magnitude_line.png')
 
 if __name__ == "__main__":
     # ...do things here to find the results...
     myfile = get_quake_data_from_URL()
-    max_mag, coords = get_max_mag_quake_detail(myfile)
+    details_of_quakes = get_max_mag_quake_detail(myfile)
 
-    print(f"The maximum magnitude is {max_mag} "
-        f"and it occured at coordinates {coords}.")
-    
-    map_response = request_map_at(coords[0][1],coords[0][0])
-    print(map_response.url)
-    im = Image.open(requests.get(map_response.url, stream=True).raw)
-    plt.imshow(im)
-    plt.show()
+    magnitude = [details_of_quakes[i][0] for i in range(len(details_of_quakes))]
+    dates = [int(details_of_quakes[i][1][0:4]) for i in range(len(details_of_quakes))]
+
+    draw_mean_mag_bar(magnitude, dates)
+    draw_freq(magnitude, dates)
+    draw_mean_mag_line(magnitude, dates)

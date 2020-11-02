@@ -1,6 +1,12 @@
 """A script to find the biggest earthquake in an online dataset."""
 import requests
 import json
+import numpy as np
+import pandas as pd
+import inflect
+import matplotlib.pyplot as plt
+from datetime import datetime
+import time
 # At the top of the file, import any libraries you will use.
 # import ...
 
@@ -19,6 +25,8 @@ quakes = requests.get("http://earthquake.usgs.gov/fdsnws/event/1/query.geojson",
                               "orderby": "time-asc"}
                           )
 data = json.loads(quakes.text)
+
+quakesdata = pd.json_normalize(data['features'])
 
 with open('quakes.json', 'w') as json_file:
     json_file.write(quakes.text)
@@ -43,3 +51,32 @@ if __name__ == "__main__":
     # named max_magnitude and coords, but you can change that.
     print(f"The maximum magnitude is {max_magnitude} "
           f"and it occured at coordinates {coords}.")
+
+    quakesdata['properties.time'] = quakesdata['properties.time'].apply(
+        lambda x: datetime.fromtimestamp(x / 1000))
+    #print(quakesdata['properties.time'])
+
+    yearly_quakes = quakesdata['properties.mag'].groupby(quakesdata['properties.time'].dt.year).agg(
+        ['mean', 'count'])
+    years = yearly_quakes.index.tolist();
+
+    xtick = np.arange(np.min(years), np.max(years)+1)
+
+    plt.figure(1)
+    plt.plot(years, yearly_quakes['count'])
+    plt.xlabel('year')
+    plt.ylabel('count')
+    plt.title('yearly quake number')
+    plt.xticks(xtick,rotation='vertical')
+    plt.savefig('quake_number_each_year.png')
+    plt.show()
+
+    plt.figure(2)
+    plt.plot(years, yearly_quakes['mean'])
+    plt.xlabel('year')
+    plt.ylabel('mean magnitude')
+    plt.title('yearly mean magnitude')
+    plt.xticks(xtick, rotation='vertical')
+    plt.savefig('mean_magnityude_each_year.png')
+    plt.show()
+

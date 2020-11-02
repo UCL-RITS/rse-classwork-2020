@@ -44,3 +44,51 @@ for key in range(0,N):
     # named max_magnitude and coords, but you can change that.
 print('The maximum magnitude is ', mag,' and it occured at coordinates ',coord)
 
+# Re-format the time
+
+import datetime
+
+year_plt = []
+mag_dict = {}
+
+for data in quakes_dict['features']:
+    time = data['properties']['time']
+    dt_obj = datetime.datetime.fromtimestamp(time/1000)
+    year = dt_obj.year
+    year_plt.append(year)
+    
+    # Create dict to collect magnitude in each year. 
+    # Year is a key. Mag is a value.
+    mag = data['properties']['mag']
+    if year in mag_dict.keys():
+        mag_dict[year].append(mag)
+    else:
+        mag_dict[year] = [mag]
+    
+#print(year_plt)
+#print(mag_dict)
+
+# Calculate the average magnitude each year
+year_final = []
+mag_mean = []
+freq = []
+for i in mag_dict.keys():
+    year_final.append(i)
+    avg = sum(mag_dict[i])/len(mag_dict[i])
+    mag_mean.append(avg)
+    freq.append(len(mag_dict[i]))
+#print(year_final)
+#print(mag_mean)
+#print(freq)
+
+## Plot data
+from matplotlib import pyplot as plt
+
+plt.plot(year_final, mag_mean)
+plt.xlabel('Year')
+plt.ylabel('Average magnitude')
+
+plt.bar(year_final, freq)
+plt.xlabel('Year')
+plt.ylabel('Frequency')
+

@@ -8,6 +8,7 @@ import requests
 import datetime
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MaxNLocator
 
 
 quakes = requests.get("http://earthquake.usgs.gov/fdsnws/event/1/query.geojson",
@@ -52,9 +53,12 @@ for counter,date in enumerate(np.unique(date_time)):
             date_mag[counter]+=current_mag[i]
 average_mag=date_mag/date_counter
 
-plt.plot(np.unique(date_time),date_counter,label="frequency per year")
+fig = plt.figure()
+ax = fig.gca()
+ax.xaxis.set_major_locator(MaxNLocator(integer=True))
 
-plt.plot(np.unique(date_time),average_mag,label="average_mag")
+plt.plot(np.unique(date_time),date_counter,label="frequency per year")
+plt.plot(np.unique(date_time),average_mag,label="average magnitude")
 plt.legend()
 
 biggest=max(current_mag)

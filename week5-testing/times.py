@@ -15,6 +15,7 @@ def time_range(start_time, end_time, number_of_intervals=1, gap_between_interval
     sec_range = [(start_time_s + datetime.timedelta(seconds=i * d + i * gap_between_intervals_s),
                   start_time_s + datetime.timedelta(seconds=(i + 1) * d + i * gap_between_intervals_s))
                  for i in range(number_of_intervals)]
+    
     return [(ta.strftime("%Y-%m-%d %H:%M:%S"), tb.strftime("%Y-%m-%d %H:%M:%S")) for ta, tb in sec_range]
 
 

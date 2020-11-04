@@ -6,6 +6,7 @@ import json
 import requests
 from matplotlib import pyplot as plt
 import datetime
+import statistics
 
 # If you want, you can define some functions to help organise your code.
 # def helper_function(argument_1, argument_2):
@@ -54,7 +55,7 @@ def find_earthquake():
     return max_magnitude, coords_list
 
 
-def plot():
+def plot_frequency():
     quakes_json = url_text("http://earthquake.usgs.gov/fdsnws/event/1/query.geojson",
                     {'starttime': "2000-01-01",
                         "maxlatitude": "58.723",
@@ -78,9 +79,64 @@ def plot():
     number_quakes = dict.values()
     years = dict.keys()
 
-    plt.plot(years, number_quakes)
+    plt.figure(figsize=(12,6))
+    plt.bar(years, number_quakes)
+    plt.ylabel('frequency')
+    plt.xlabel('years')
+    plt.title('frequency (number) of earthquakes per year')
+    plt.show()
+
+
+def plot_magnitude():
+  
+    quakes_json = url_text("http://earthquake.usgs.gov/fdsnws/event/1/query.geojson",
+                    {'starttime': "2000-01-01",
+                        "maxlatitude": "58.723",
+                        "minlatitude": "50.008",
+                        "maxlongitude": "1.67",
+                        "minlongitude": "-9.756",
+                        "minmagnitude": "1",
+                        "endtime": "2020-10-11",
+                        "orderby": "time-asc" })
+    
+    # for every earthquake in the dataset
+ 
+
+    # years = []
+    # magnitudes = []
+    dictionary = {}
+    dict2 = {}
+    for earthquake in quakes_json['features']:
+        year = datetime.datetime.fromtimestamp(earthquake['properties']['time']/1000).year
+        # years.append(year)
+        magnitude = earthquake['properties']['mag']
+        # magnitudes.append(magnitude)
+
+        if year in dictionary.keys():
+                dictionary[year].append(magnitude)
+                # dictionary[year].append(magnitudes[-1])
+                # list_mag.append(magnitudes[years.index(year)]) -> list.index() only gives the first index an element appears
+                # dictionary[year] = list_mag
+
+                #length of list [len-1] or last element [-1]
+              
+        else:
+            dictionary[year] = [magnitude]
+
+    for year in dictionary.keys(): # same thing as in dictionary
+        dict2[year] = statistics.mean(dictionary[year]) 
+    
+    print(dict2)
+    # print(statistics.mean(dictionary.values())) -> average of all lists not elements in one list
+    print(dictionary)
+
+'''
+    plt.figure(figsize=(12,6))
+    plt.hist(magnitudes)
     plt.title('frequency (number) of earthquakes per year')
     plt.show() 
+
+'''
 
 # When you run the file, it should print out the location and magnitude
 # of the biggest earthquake.
@@ -89,7 +145,8 @@ if __name__ == "__main__":
     # ...do things here to find the results...
       
     [max_magnitude, coords] = find_earthquake()
-    plot()
+    # plot_frequency()
+    plot_magnitude()
 
     # The lines below assume that the results are stored in variables
     # named max_magnitude and coords, but you can change that.
@@ -98,4 +155,7 @@ if __name__ == "__main__":
           f'and it occured at coordinates {coords}.')
 
     
+
+
+
 

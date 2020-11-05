@@ -1,4 +1,5 @@
 from times import time_range, compute_overlap_time
+import pytest
 
 def test_given_input():
 
@@ -29,3 +30,8 @@ def test_exact_overlap():
     expected = []
 
     assert len(result) == len(expected)
+
+def test_backward_date():
+
+    with pytest.raises(ValueError):
+        time_range("2010-01-12 12:00:00", "2010-01-12 10:00:00")

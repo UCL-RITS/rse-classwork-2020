@@ -1,3 +1,6 @@
 week05-testing/.vscode/launch.json
 week05-testing/.vscode/settings.json
 week05-testing/__pycache__/*
+week05-testing/.coverage
+week05-testing/htmlcov/*
+.DS_Store

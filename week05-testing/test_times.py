@@ -1,4 +1,5 @@
 import times
+import pytest
 
 class TestTimeOverlap:
     """TestTimeOverlap class contains all functions involved in
@@ -33,3 +34,10 @@ class TestTimeOverlap:
         result = times.compute_overlap_time(t1, t2)
         expected = []
         assert result == expected
+
+    def test_negative_time_interval(self):
+        """Tests a time range which goes backwards"""
+        t1 = times.time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00")
+        t2 = times.time_range("2010-01-12 11:00:00", "2010-01-12 10:30:00")
+        with pytest.raises(ValueError):
+            times.compute_overlap_time(t1, t2)

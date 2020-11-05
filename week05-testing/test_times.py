@@ -1,6 +1,6 @@
 from times import time_range, compute_overlap_time
 import datetime
-
+from pytest import raises
 
 def test_given_input():
     large = time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00")
@@ -29,3 +29,7 @@ def test_end_start():
     expected = [('2010-01-12 11:00:00', '2010-01-12 11:00:00')]
     result = compute_overlap_time(range1, range2)
     assert expected == result
+
+def test_negative_time():       
+    with raises(TypeError) as exception:
+        range1 = time_range("2010-01-12 13:00:00", "2010-01-12 11:00:00")

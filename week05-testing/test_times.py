@@ -34,8 +34,9 @@ def test_touching_times():
 
 def negative_test():
     t = time_range("2010-01-12 12:00:00", "2010-01-12 10:00:00")
+    t2 = time_range("2010-01-12 12:00:00", "2010-01-12 11:00:00")
     with pytest.raises(ValueError):
-        compute_overlap_time(t)
+        compute_overlap_time(t,t2)
     #result = compute_overlap_time(large,short)
     #expected = [('2010-01-12 12:30:00', '2010-01-12 12:00:00'), ('2010-01-12 12:38:00', '2010-01-12 12:00:00')]
     #assert result == expected

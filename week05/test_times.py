@@ -58,11 +58,5 @@ def test_negative_time():
         
         #assert e.match("Start time must come before end time")
 
-overlap_time_1 = time_range("2010-01-12 10:00:00", "2010-01-12 12:01:00",2, 60)
-overlap_time_2 = time_range("2010-01-12 10:30:00", "2010-01-12 11:15:00", 2, 60)
 
-
-print(overlap_time_1)
-print(overlap_time_2)
-print(compute_overlap_time(overlap_time_1,overlap_time_2))
 

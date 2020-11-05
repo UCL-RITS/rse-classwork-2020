@@ -21,6 +21,7 @@ def compute_overlap_time(range1, range2):
             if low < high:
                 overlap_time.append((low, high))
     return overlap_time
+    
 
 # if __name__ == "__main__":
 #     large = time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00")

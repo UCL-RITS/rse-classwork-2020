@@ -15,16 +15,22 @@ def test_no_overlap():
     expected = []
     assert result == expected
 
+def test_contain_intervals():
+    large = time_range("2010-01-12 10:00:00", "2010-01-12 13:00:00", 2, 0)
+    short = time_range("2010-01-12 11:00:00", "2010-01-12 12:00:00", 2, 0)
+    result = compute_overlap_time(large, short)
+    expected = [('2010-01-12 11:00:00', '2010-01-12 11:30:00'), ('2010-01-12 11:30:00', '2010-01-12 12:00:00')]
+    assert result == expected
 
-# def test_contain_intervals():
-#     large = time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00", 2, 59)
-#     short = time_range("2010-01-12 10:30:00", "2010-01-12 10:45:00", 2, 60)
-#     result = compute_overlap_time(large, short)
-#     expected = ''
-#     assert result == expected
+def test_touching_times():
+    large = time_range("2010-01-12 10:00:00", "2010-01-12 13:00:00", 2, 0)
+    short = time_range("2010-01-12 13:00:00", "2010-01-12 14:00:00", 2, 0)
+    result = compute_overlap_time(large, short)
+    expected = []
+    assert result == expected
 
 def test_backfoward_date():
     large = time_range("2010-01-12 13:00:00", "2010-01-12 12:00:00", 4, 60)
     short = time_range("2010-01-12 14:30:00", "2010-01-12 12:00:00", 2, 60)
     with raises(ValueError):
-        print(compute_overlap_time(large, short))
+        compute_overlap_time(large, short)

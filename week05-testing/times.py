@@ -7,7 +7,6 @@ import datetime
 # number of intervals [t2,t3]
 def time_range(start_time, end_time, number_of_intervals=1, gap_between_intervals_s=0): # gaps in seconds - possible in the interval(s)
 
-
     if end_time < start_time:
         raise ValueError('End_time is before start_time')
 
@@ -40,6 +39,6 @@ def compute_overlap_time(range1, range2):
 if __name__ == "__main__":
     large = time_range("2010-01-12 12:00:00", "2010-01-12 10:00:00") # range 1 [t1,t2]
     short = time_range("2010-01-12 10:30:00", "2010-01-12 10:45:00", 2, 60) # range 2 [t3,t6] -> [t3,t4][t5,t6]
-    print(large)
-    print(short)
-    print(compute_overlap_time(large, short))
+    # print(large)
+    # print(short)
+    # print(compute_overlap_time(large, short))

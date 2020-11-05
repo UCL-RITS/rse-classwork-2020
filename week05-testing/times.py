@@ -36,5 +36,4 @@ def compute_overlap_time(range1, range2):
     # print(short)
     # with raises(ValueError):
     #     print(compute_overlap_time(large, short))
-    
     #print(compute_overlap_time(large, short))

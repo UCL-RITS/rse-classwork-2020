@@ -4,25 +4,29 @@ import pytest
 from pytest import raises
 
 @pytest.mark.parametrize("time_range_1, time_range_2, expected", [
+
+    # test given input
     (time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00"),
     time_range("2010-01-12 10:30:00", "2010-01-12 10:45:00", 2, 60),
     [('2010-01-12 10:30:00', '2010-01-12 10:37:00'), ('2010-01-12 10:38:00', '2010-01-12 10:45:00')]), 
 
+    # test for non-overlapping time ranges
     (time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00"),
     time_range("2010-01-12 13:00:00", "2010-01-12 14:00:00"),
-    0), 
+    []), 
 
+    # test for time ranges with multiple inputs
     (time_range("2010-01-12 10:00:00", "2010-01-12 11:00:00", 2, 60),
     time_range("2010-01-12 10:50:00", "2010-01-12 11:01:00", 2, 120),
     [('2010-01-12 10:50:00', '2010-01-12 10:54:30'), ('2010-01-12 10:56:30', '2010-01-12 11:00:00')]),
     
+    # test for second interval starting right as the first interval ends
     (time_range("2010-01-12 10:00:00", "2010-01-12 11:00:00"),
     time_range("2010-01-12 11:00:00", "2010-01-12 12:00:00"),
     [('2010-01-12 11:00:00', '2010-01-12 11:00:00')])
 
 ])
     
-
 
 def test_eval(time_range_1, time_range_2, expected):
     result = compute_overlap_time(time_range_1, time_range_2) 
@@ -31,3 +35,32 @@ def test_eval(time_range_1, time_range_2, expected):
 def test_negative_time():       
     with raises(TypeError) as exception:
         range1 = time_range("2010-01-12 13:00:00", "2010-01-12 11:00:00")
+
+
+#def test_given_input():
+#    large = time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00")
+#    short = time_range("2010-01-12 10:30:00", "2010-01-12 10:45:00", 2, 60)
+#    result = compute_overlap_time(large, short)
+#    expected = [('2010-01-12 10:30:00', '2010-01-12 10:37:00'), ('2010-01-12 10:38:00', '2010-01-12 10:45:00')]
+#    assert result == expected
+
+#def test_not_overlapping():
+#    range1 = time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00")
+#    range2 = time_range("2010-01-12 13:00:00", "2010-01-12 14:00:00")
+#    result = compute_overlap_time(range1, range2)
+#    expected = 0
+#    assert result == expected
+
+#def test_multiple_intervals():
+#    range1 = time_range("2010-01-12 10:00:00", "2010-01-12 11:00:00", 2, 60)
+#    range2 = time_range("2010-01-12 10:50:00", "2010-01-12 11:01:00", 2, 120)
+#    expected = [('2010-01-12 10:50:00', '2010-01-12 10:54:30'), ('2010-01-12 10:56:30', '2010-01-12 11:00:00')]
+#    result = compute_overlap_time(range1, range2)
+#    assert result == expected
+
+#def test_end_start():
+#    range1 = time_range("2010-01-12 10:00:00", "2010-01-12 11:00:00")
+#    range2 = time_range("2010-01-12 11:00:00", "2010-01-12 12:00:00")
+#    expected = [('2010-01-12 11:00:00', '2010-01-12 11:00:00')]
+#    result = compute_overlap_time(range1, range2)
+#    assert expected == result

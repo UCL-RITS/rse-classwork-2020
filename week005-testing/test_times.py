@@ -1,5 +1,6 @@
 from times import time_range
 from times import compute_overlap_time
+from pytest import raises
 
 def test_given_input():
 
@@ -9,3 +10,18 @@ def test_given_input():
     result = compute_overlap_time(large, short)
     expected = [('2010-01-12 10:30:00', '2010-01-12 10:37:00'), ('2010-01-12 10:38:00', '2010-01-12 10:45:00')]
     assert result == expected
+
+def test_no_overlap():
+
+    large = time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00")
+    short = time_range("2010-01-13 10:30:00", "2010-01-13 10:45:00")
+    
+    result = compute_overlap_time(large, short)
+    expected = []
+    assert result == expected
+
+def test_later_start_time():
+    with raises(ValueError) as exception:
+        time_range("2010-01-12 10:00:00", "2010-01-10 12:00:00")
+
+    

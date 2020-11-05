@@ -10,17 +10,16 @@ def test_given_input():
     expected = [('2010-01-12 10:30:00', '2010-01-12 10:37:00'), ('2010-01-12 10:38:00', '2010-01-12 10:45:00')]
     assert result == expected
 
-    # Assert 2 - test should work 
-    range5 = time_range("2001-01-12 10:00:00", "2010-01-12 12:00:00")
-    range6 = time_range("2001-01-12 10:30:00", "2010-01-12 10:45:00", 2, 60)
+def test_no_overlap():
+    # Assert 2 - two times range that do not overlap
+    range5 = time_range("2009-01-12 10:00:00", "2009-01-12 12:00:00")
+    range6 = time_range("2001-01-12 10:30:00", "2001-01-12 10:45:00", 2, 60)
     result = compute_overlap_time(range5, range6) 
-    expected = [('2001-01-12 10:30:00', '2005-07-13 22:37:00'), ('2005-07-13 22:38:00', '2010-01-12 10:45:00')]
+    expected = []
     assert result == expected
 
-     # Assert 2 - test should fail (value error in range time / instead of -)
-    range3 = time_range("2010-01-12 10:00:00", "2010-01/12 12:00:00")
-    range4 = time_range("2010-01-12 10:30:00", "2010-01-12 10:45:00", 2, 60)
-    result = compute_overlap_time(range3, range4) 
-    expected = [('2010-01-12 10:30:00', '2010-01-12 10:37:00'), ('2010-01-12 10:38:00', '2010-01-12 10:45:00')]
-    assert result == expected
+def test_backwards():
+    with pytest.raises(ValueError):
+        time_range("2010-01-12 12:00:00", "2010-01-12 10:00:00")
+
 

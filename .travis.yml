@@ -3,7 +3,7 @@ python:
   - "3.8"
 # command to install dependencies
 install:
-  - pip install -r requirements.txt
+  - pip install pytest pytest-cov datetime codecov pyyaml
 # command to run tests
 script:
   - pytest --cov="week05-testing" --cov-report=term

@@ -6,7 +6,7 @@ install:
   - pip install pytest pytest-cov datetime codecov pyyaml
 # command to run tests
 script:
-  - pytest --cov="week05-testing" --cov-report=term
+  - pytest --cov="week05-testing" --cov-report html
   - pytest week05-testing/
 after_success:
     - codecov

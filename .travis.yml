@@ -9,4 +9,4 @@ script:
   - pytest --cov="week05-testing" --cov-report html
   - pytest week05-testing/
 after_success:
-    - coverage
+    - coverage xml

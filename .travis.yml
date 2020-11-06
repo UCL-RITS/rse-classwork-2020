@@ -3,10 +3,10 @@ python:
   - "3.8"
 # command to install dependencies
 install:
-  - pip install pytest pytest-cov datetime codecov pyyaml
+  - pip install pytest pytest-cov datetime coverage pyyaml
 # command to run tests
 script:
   - pytest --cov="week05-testing" --cov-report html
   - pytest week05-testing/
 after_success:
-    - codecov
+    - coverage

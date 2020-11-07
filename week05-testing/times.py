@@ -12,7 +12,6 @@ def time_range(start_time, end_time, number_of_intervals=1, gap_between_interval
     else:
         raise ValueError("End time is before start time")
 
-
 def compute_overlap_time(range1, range2):
     overlap_time = []
     for start1, end1 in range1:

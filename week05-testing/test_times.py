@@ -2,7 +2,7 @@ from times import compute_overlap_time, time_range
 import pytest
 import yaml
 
-with open('fixture.yaml', 'r') as f:
+with open('week05-testing/fixture.yaml', 'r') as f:
     data = yaml.load(f, Loader=yaml.FullLoader) # or safe_load(f)
     print(data) # gives a list of nested dictionary 
 

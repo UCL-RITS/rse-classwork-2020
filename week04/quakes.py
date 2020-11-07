@@ -1,7 +1,7 @@
 """A script to find the biggest earthquake in an online dataset."""
 
 # At the top of the file, import any libraries you will use.
-# import ...
+# import 
 import json 
 import requests
 from matplotlib import pyplot as plt
@@ -118,7 +118,7 @@ def plot_magnitude():
                 # list_mag.append(magnitudes[years.index(year)]) -> list.index() only gives the first index an element appears
                 # dictionary[year] = list_mag
 
-                #length of list [len-1] or last element [-1]
+                #length of list [len-1] or last element [-1] index
               
         else:
             dictionary[year] = [magnitude]

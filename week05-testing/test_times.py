@@ -1,20 +1,21 @@
 from times import compute_overlap_time, time_range
 import pytest
+import yaml
 
-@pytest.mark.parametrize('time_range1, time_range2, expected', [
-        (time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00"), 
-        time_range("2010-01-12 10:30:00", "2010-01-12 10:45:00", 2, 60),
-        [('2010-01-12 10:30:00', '2010-01-12 10:37:00'), ('2010-01-12 10:38:00', '2010-01-12 10:45:00')]),
-        (time_range("2009-01-12 10:00:00", "2009-01-12 12:00:00"), 
-        time_range("2001-01-12 10:30:00", "2001-01-12 10:45:00", 2, 60),
-        [])
-        ])
+with open('fixture.yaml', 'r') as f:
+    data = yaml.load(f, Loader=yaml.FullLoader) # or safe_load(f)
+    print(data) # gives a list of nested dictionary 
 
-def test_eval(time_range1, time_range2, expected):
-    # Assert 1 - test should pass
-    result = compute_overlap_time(time_range1, time_range2) 
+@pytest.mark.parametrize('test', data) 
+def test_eval(test):
+    list_test = list(test.values())
+    range1 = time_range(*(list_test[0]['time_range1'])) # tuple
+    range2 = time_range(*(list_test[0]['time_range2']))
+    expected = [(interval1, interval2) for interval1, interval2 in list_test[0]['expected']] # for loop needed for 2 or more intervals 
+    result = compute_overlap_time(range1, range2)
     assert result == expected
 
 def test_backwards():
     with pytest.raises(ValueError):
         time_range("2010-01-12 12:00:00", "2010-01-12 10:00:00")
+

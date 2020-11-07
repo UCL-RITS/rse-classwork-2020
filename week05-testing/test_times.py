@@ -2,11 +2,11 @@ from times import compute_overlap_time, time_range
 import pytest
 import yaml
 
-with open('week05-testing/fixture.yaml', 'r') as f:
-    data = yaml.load(f, Loader=yaml.FullLoader) # or safe_load(f)
-    print(data) # gives a list of nested dictionary 
+with open('fixture.yaml', 'r') as f:
+    data_dictionary = yaml.load(f, Loader=yaml.FullLoader) # or safe_load(f)
+    # gives a list of nested dictionary 
 
-@pytest.mark.parametrize('test', data) 
+@pytest.mark.parametrize('test', data_dictionary)
 def test_eval(test):
     list_test = list(test.values())
     range1 = time_range(*(list_test[0]['time_range1'])) # tuple

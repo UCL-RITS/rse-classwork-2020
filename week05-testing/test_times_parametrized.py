@@ -1,11 +1,18 @@
 import times
 import pytest
+import yaml
+
+with open("./week05-testing/fixtures.yaml", "r") as file:
+    fixtures = yaml.safe_load(file)
 
 # Tests that various inputs work as expected for the compute_overlap_time function 
-@pytest.mark.parametrize('time_range_1, time_range_2, expected', [(times.time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00"), times.time_range("2010-01-12 10:30:00", "2010-01-12 10:45:00", 2, 60), [('2010-01-12 10:30:00', '2010-01-12 10:37:00'), ('2010-01-12 10:38:00', '2010-01-12 10:45:00')]),(times.time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00"), times.time_range("2010-01-30 13:00:00", "2010-01-30 14:00:00"), []), (times.time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00"), times.time_range("2010-01-12 12:00:00", "2010-01-12 14:00:00"), [])])
-def test_given_input(time_range_1, time_range_2, expected):
-    result = times.compute_overlap_time(time_range_1,time_range_2)
-    assert result == expected
+@pytest.mark.parametrize("test_name", fixtures)
+def test_given_input(test_name):
+    properties = list(test_name.values())[0]
+    first_range = times.time_range(*properties['time_range_1'])
+    second_range = times.time_range(*properties['time_range_2'])
+    expected_overlap = [(start, stop) for start, stop in properties['expected']]
+    assert times.compute_overlap_time(first_range, second_range) == expected_overlap
 
 # Testing the right error is raised when inputting time ranges in the wrong order
 def test_negative():

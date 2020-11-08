@@ -1,21 +1,27 @@
-from times import time_range ,compute_overlap_time, compute_overlap_helper
 import pytest
+import yaml
+from times import compute_overlap_time, time_range
 
-testdata = [[('2010-01-12 10:30:00', '2010-01-12 10:37:00'),('2010-01-12 10:38:00', '2010-01-12 12:20:00'),tuple()] #test_no_overlap_helper
-     ,(('2010-01-12 10:30:00', '2010-01-12 10:37:00'),('2010-01-12 10:30:00', '2010-01-12 10:35:00'),('2010-01-12 10:30:00', '2010-01-12 10:35:00')) #test_inside_edge_overlap_helper
-     ,(('2010-01-12 10:30:00', '2010-01-12 10:37:00'),('2010-01-12 10:30:00', '2010-01-12 10:37:00'),('2010-01-12 10:30:00', '2010-01-12 10:37:00')) #test_same_overlap_helper
-     ,(('2010-01-12 10:30:00', '2010-01-12 10:37:00'),('2010-01-12 10:37:00', '2010-01-12 10:39:00'),tuple()) #test_outside_edge_overlap_helper
-     ,(('2010-01-12 10:30:00', '2010-01-12 10:37:00'),('2010-01-12 10:34:00', '2010-01-12 10:42:00'),('2010-01-12 10:34:00', '2010-01-12 10:37:00')) #test_partial_overlap_helper
-     ,(('2010-01-12 10:30:00', '2010-01-12 10:37:00'),('2010-01-12 10:32:00', '2010-01-12 10:36:30'),('2010-01-12 10:32:00', '2010-01-12 10:36:30'))#test_subset_overlap_helper
-]
+with open("fixture.yaml", 'r') as yamlfile:
+    fixture = yaml.safe_load(yamlfile)
+    print(fixture)
+    
+@pytest.mark.parametrize("test_name", fixture)
+# fixture is a list of dictionaries [{'generic':...}, {'no_overlap':...}, ...]
 
-@pytest.mark.parametrize(
-    "time_range1,time_range2,expected",testdata
-)
+def test_time_range_overlap(test_name):
+    # test_name will be a dictionary, e.g. for the first case: {'generic': {'time_range_1':..., 'time_range2':..., 'expected':...}
+    properties = list(test_name.values())[0]
+    first_range = time_range(*properties['time_range_1'])
+    second_range = time_range(*properties['time_range_2'])
+    expected_overlap = [(start, stop) for start, stop in properties['expected']]
+    assert compute_overlap_time(first_range, second_range) == expected_overlap
 
-def test_eval(time_range1,time_range2,expected):
-    assert compute_overlap_helper(time_range1,time_range2) == expected
-
+def test_negative_time_range():
+    with pytest.raises(ValueError) as e:
+        time_range("2010-01-12 10:00:00", "2010-01-12 09:30:00")
+        assert e.match('The end of the time range has to come strictly after its start.')
+"""        
 def test_given_input():
     
     large = time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00")
@@ -24,16 +30,8 @@ def test_given_input():
     result = compute_overlap_time(large, short) 
     expected = [('2010-01-12 10:30:00', '2010-01-12 10:37:00'), ('2010-01-12 10:38:00', '2010-01-12 10:45:00')]
     assert result == expected
-"""
-def test_subset_overlap_helper():
-    assert(
-        compute_overlap_helper(
-            ('2010-01-12 10:30:00', '2010-01-12 10:37:00'),
-            ('2010-01-12 10:32:00', '2010-01-12 10:36:30')
-        )
-        == ('2010-01-12 10:32:00', '2010-01-12 10:36:30')
-    )
-"""
+
 def test_negative():
     with pytest.raises(ValueError):
         time_range("2010-01-12 12:00:00", "2010-01-12 10:00:00")
+"""

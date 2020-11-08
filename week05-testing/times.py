@@ -1,4 +1,6 @@
 import datetime
+import requests
+import json
 
 def time_range(start_time, end_time, number_of_intervals=1, gap_between_intervals_s=0):
     start_time_s = datetime.datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S")
@@ -12,6 +14,26 @@ def time_range(start_time, end_time, number_of_intervals=1, gap_between_interval
     else:
         raise ValueError("End time is before start time")
 
+def iss_passes(lat = 51.482218, lon = -.264547, alt =10, n=5):
+    # find out the passes due when the ISS passes over Chiswick
+
+    response = requests.get("http://api.open-notify.org/iss-pass.json",
+                                    params={
+                                        "lat": lat,
+                                        "lon": lon,
+                                        "alt": alt,
+                                        "n": n})
+
+    if response.status_code != 200:
+        # if the request failed for some reason (copied from model solution)
+        return []
+
+    passes=response.json()['response']
+
+    return [(datetime.datetime.fromtimestamp(item['risetime']).strftime("%Y-%m-%d %H:%M:%S"),
+             (datetime.datetime.fromtimestamp(item['risetime'] + item['duration'])).strftime("%Y-%m-%d %H:%M:%S"))
+            for item in passes]
+
 def compute_overlap_time(range1, range2):
     overlap_time = []
     for start1, end1 in range1:
@@ -24,6 +46,6 @@ def compute_overlap_time(range1, range2):
 
 
 if __name__ == "__main__":
-    large = time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00")
-    short = time_range("2010-01-12 10:30:00", "2010-01-12 10:45:00", 2, 60)
-    print(compute_overlap_time(large, short))
+#    large = time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00")
+#    short = time_range("2010-01-12 10:30:00", "2010-01-12 10:45:00", 2, 60)
+    print(iss_passes()) # ISS passes over my bedroom in Chiswick.

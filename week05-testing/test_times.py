@@ -7,8 +7,9 @@ import mock
 import datetime
 
 #testing file
-with open("fixture.yml", 'r') as yamlfile:
-    fixture = yaml.safe_load(yamlfile)
+
+with open('fixture.yml', 'r') as yamlfile:
+   fixture = yaml.safe_load(yamlfile)
 
 @pytest.mark.parametrize("test_name", fixture)
 # fixture is a list of dictionaries [{'generic':...}, {'no_overlap':...}, ...]

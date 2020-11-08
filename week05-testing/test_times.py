@@ -21,17 +21,17 @@ def test_negative_time_range():
     with pytest.raises(ValueError) as e:
         time_range("2010-01-12 10:00:00", "2010-01-12 09:30:00")
         assert e.match('The end of the time range has to come strictly after its start.')
-"""        
-def test_given_input():
+        
+# def test_given_input():
     
-    large = time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00")
-    short = time_range("2010-01-12 10:30:00", "2010-01-12 10:45:00", 2, 60)
+#     large = time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00")
+#     short = time_range("2010-01-12 10:30:00", "2010-01-12 10:45:00", 2, 60)
     
-    result = compute_overlap_time(large, short) 
-    expected = [('2010-01-12 10:30:00', '2010-01-12 10:37:00'), ('2010-01-12 10:38:00', '2010-01-12 10:45:00')]
-    assert result == expected
+#     result = compute_overlap_time(large, short) 
+#     expected = [('2010-01-12 10:30:00', '2010-01-12 10:37:00'), ('2010-01-12 10:38:00', '2010-01-12 10:45:00')]
+#     assert result == expected
 
-def test_negative():
-    with pytest.raises(ValueError):
-        time_range("2010-01-12 12:00:00", "2010-01-12 10:00:00")
-"""
+# def test_negative():
+#     with pytest.raises(valueerror):
+#         time_range("2010-01-12 12:00:00", "2010-01-12 10:00:00")
+

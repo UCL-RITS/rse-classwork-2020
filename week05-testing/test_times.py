@@ -1,32 +1,27 @@
 from times import compute_overlap_time,time_range
 from pytest import raises
+import pytest
+import yaml
 # import times as ts
 import datetime
 
-#Answers UCL-RITS/rse-classwork-2020#
+# Answers UCL-RITS/rse-classwork-2020#
 
-test_data = [ 
-    (time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00"),
-    time_range("2010-01-12 10:30:00", "2010-01-12 10:45:00", 2, 60),
-    [('2010-01-12 10:30:00', '2010-01-12 10:37:00'), ('2010-01-12 10:38:00', '2010-01-12 10:45:00')]),
-    (time_range("2010-01-12 11:00:00", "2010-01-12 12:00:00"),
-    time_range("2010-01-12 10:30:00", "2010-01-12 10:45:00", 2, 60),
-    []),
-    (time_range("2010-01-12 10:00:00", "2010-01-12 14:00:00", 3, 1800),
-    time_range("2010-01-12 10:30:00", "2010-01-12 10:45:00", 2, 60),
-    [('2010-01-12 10:30:00', '2010-01-12 10:37:00'), ('2010-01-12 10:38:00', '2010-01-12 10:45:00')]),
-    (time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00"),
-    time_range("2010-01-12 12:00:00", "2010-01-12 13:00:00"),
-    [])
-]
+with open("fixture.yaml", 'r') as yamlfile:
+    fixture = yaml.load(yamlfile, Loader=yaml.FullLoader)
 
+# https://docs.pytest.org/en/stable/example/parametrize.html
 
-@pytest.mark.parametrize("time_range_1,time_range_2,expected",test_data)
-
-def test_overlap_time(range1,range2,expected):
-    result = compute_overlap_time(range1,range2)
-    assert result == expected
-
+@pytest.mark.parametrize("test_name", fixture)  
+def test_overlap_time(test_name):
+    information = list(test_name.values())[0]
+    
+    # use '*' since we do not know the value of 'number of intervals' within 'time_range' function
+    range_1 = time_range(*information['time_range_1'])
+    range_2 = time_range(*information['time_range_2'])
+    expected = [(start, stop) for start, stop in information['expected']]
+    
+    assert compute_overlap_time(range_1, range_2) == expected
 
 # def test_given_input(): 
 #     range1 = time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00")
@@ -69,7 +64,6 @@ def test_overlap_time(range1,range2,expected):
 #     with raises(ValueError):
 #         compute_overlap_time(range1,range2)
         
-   
 # Testing area
 
 #test_given_input()

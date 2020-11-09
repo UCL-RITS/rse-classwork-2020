@@ -3,7 +3,9 @@ python:
   - "3.8"
 # command to install dependencies
 install:
-  - pip install requests pyyaml pytest pytest-cov
+  - pip install requests pyyaml pytest pytest-cov codecov
 # command to run tests
 script:
   - pytest --cov
+after_success:
+  - codecov

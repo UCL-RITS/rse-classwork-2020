@@ -1,0 +1,13 @@
+language: python
+python:
+  - 2.7
+  - 3.6
+  - 3.7
+  - 3.8
+install:
+  - pip install -r requirements.txt
+script: 
+  - pytest --cov="week05-testing" --cov-report=term
+  - pytest week05-testing/
+after_success:
+  - codecov # submit coverage

@@ -4,15 +4,9 @@ python:
   - 3.6
   - 3.7
   - 3.8
-before_install:
-  - python --version
-  - pip install -U pip
-  - pip install -U pytest
-  - pip install codecov
 install:
   - pip install -r requirements.txt
 script: 
-  - pytest # run tests
   - pytest --cov="week05-testing" --cov-report=term
   - pytest week05-testing/
 after_success:

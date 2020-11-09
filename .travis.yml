@@ -9,7 +9,7 @@ before_install:
   - pip install -U pytest
   - pip install codecov
 install:
-  - pip install ".[test]" . # install package + test dependencies
+  - pip install requirements.txt
 script: 
   - pytest # run tests
   - pytest --cov="week05-testing" --cov-report=term

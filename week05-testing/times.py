@@ -27,7 +27,7 @@ def compute_overlap_time(range1, range2):
                 overlap_time.append((low, high))
     return overlap_time
 
-def iss_passes(lat, lon, n = 1):
+def iss_passes(lat, lon, n = 5):
     response = requests.get("http://api.open-notify.org/iss-pass.json",
                         params={
                             'lat': lat,
@@ -37,7 +37,7 @@ def iss_passes(lat, lon, n = 1):
     if response.status_code != 200:
         # if the request failed for some reason
         return []
-
+    print(response)
     response = response.json()['response']
 
     time_range = [(datetime.datetime.fromtimestamp(x['risetime']).strftime("%Y-%m-%d %H:%M:%S"), 
@@ -45,9 +45,9 @@ def iss_passes(lat, lon, n = 1):
                 for x in response]
     return time_range
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
 
     # large = time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00")
     # short = time_range("2010-01-12 10:30:00", "2010-01-12 10:45:00", 2, 60)
     # print(compute_overlap_time(large, short)) 
-    print(iss_passes(29.55,95.1,n=5))
+    #iss_passes(29.55,95.1,n=5)

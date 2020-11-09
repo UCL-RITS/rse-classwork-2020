@@ -8,7 +8,7 @@ def time_range(start_time, end_time, number_of_intervals=1, gap_between_interval
     if start_time >= end_time:
         raise ValueError("End time should be later than Start time.")
 
-    d = (end_time_s - start_time_s).total_seconds() / number_of_intervals + gap_between_intervals_s * (1 / number_of_intervals - 1)
+    d = 1.0 * (end_time_s - start_time_s).total_seconds() / number_of_intervals + gap_between_intervals_s * (1.0 / number_of_intervals - 1.0)
     sec_range = [(start_time_s + datetime.timedelta(seconds=i * d + i * gap_between_intervals_s),
                   start_time_s + datetime.timedelta(seconds=(i + 1) * d + i * gap_between_intervals_s))
                  for i in range(number_of_intervals)]

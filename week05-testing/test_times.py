@@ -1,8 +1,7 @@
-from times import compute_overlap_time, time_range
-from datetime import datetime
+from times import compute_overlap_time, time_range, iss_passes, fetch_iss_passes, json_to_passes
 import pytest
-
-from times import compute_overlap_time, time_range
+from unittest.mock import patch
+import requests
 
 @pytest.mark.parametrize("range1, range2, expected",
 [(time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00"),
@@ -26,3 +25,11 @@ def test_backward():
     with pytest.raises(ValueError) as e:
         time_range("2010-01-12 13:00:00", "2010-01-12 12:00:00")
         assert e.match('End time should be later than Start time.')
+
+def test_fetch_iss_passes():
+    with patch.object(requests, "get") as mock_get:
+        passes = fetch_iss_passes(0.1, 0.1, 3)
+        mock_get.assert_called_with(
+                "http://api.open-notify.org/iss-pass.json",
+                params={'lat': 0.1, 'lon':0.1, 'n':3}
+        )

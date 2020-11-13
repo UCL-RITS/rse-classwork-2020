@@ -48,8 +48,7 @@ def convert_numbers(list_of_strings):
         # whitespace, and collect them into a single list...
         all_numbers.extend([token.strip() for token in s.split()])
     # ...then convert each substring into a number
-    return [float(number_string) for number_string in all_numbers]
-
+    return [int(number_string) for number_string in all_numbers]
 
 if __name__ == "__main__":
     numbers_strings = ["1","2","4"]

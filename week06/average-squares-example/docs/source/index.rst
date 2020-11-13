@@ -11,7 +11,7 @@ Purpose of the project is to find the average squares and also convert numbers
    :maxdepth: 2
    :caption: Contents:
 
-   <average-square-docs>
+   :ref:`Average Square Documentation<average-square-docs>`
 
 
 

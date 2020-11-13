@@ -7,6 +7,7 @@ Welcome to documentation's documentation!
 =========================================
 
 Purpose of the project is to find the average squares and also convert numbers
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:

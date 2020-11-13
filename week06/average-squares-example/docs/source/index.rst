@@ -8,7 +8,7 @@ Welcome to documentation's documentation!
 
 Purpose of the project is to find the average squares and also convert numbers
 .. toctree::
-   Average square documentation <average-square-docs.rst>
+   average-square-docs
    :maxdepth: 2
    :caption: Contents:
 

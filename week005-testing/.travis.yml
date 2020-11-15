@@ -5,8 +5,7 @@ python:
   - "3.8"
 # command to install dependencies
 #install:
-#  - pip install requests pyyaml pytest pytest-cov
+  - pip install requests pyyaml pytest pytest-cov
 # command to run tests
 script:
-#  - pytest --cov
- - pytest -v
+  - pytest --cov

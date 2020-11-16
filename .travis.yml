@@ -5,5 +5,5 @@ python:
 install:
   - pip install requests pyyaml pytest pytest-cov
 script:
-- pytest --cov --cov=/path/to/code
+- pytest --cov-report html test_times.py --cov=/path/to/code
 

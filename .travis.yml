@@ -5,5 +5,5 @@ python:
 install:
   - pip install requests pyyaml pytest pytest-cov
 script:
-- pytest --cov-report html
+- pytest --cov
 

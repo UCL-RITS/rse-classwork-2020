@@ -21,3 +21,16 @@ def test_backwards():
     with pytest.raises(ValueError):
         time_range("2010-01-12 12:00:00", "2010-01-12 10:00:00")
 
+'''
+def test_iss_passes():
+    with mock.patch.object(requests, 'get') as mock_get:
+        iss_london = iss_passes(51.5074, -0.1278)
+        mock_get.assert_called_with("http://api.open-notify.org/iss-pass.json",
+                                    params={
+                                            'lat': 51.5074,
+                                            'lon': -0.1278,
+                                            'n': 5
+                                    })
+
+        # assert len(iss_london) == 5
+'''

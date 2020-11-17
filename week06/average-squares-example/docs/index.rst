@@ -13,6 +13,8 @@ This directory contains functions to compute the weighted sum of squares and cre
    :maxdepth: 2
    :caption: Contents:
 
+   content/average-squares-docs.rst
+
 
 
 Indices and tables

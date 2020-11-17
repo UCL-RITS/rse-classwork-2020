@@ -1,0 +1,32 @@
+
+
+Set up your local copy
+You will only need to do the following steps once. You may have already done some of these in the first class -- if so, you can skip those steps.
+
+Fork the repository on GitHub.
+Create a local copy of your fork on your computer by cloning it.
+Go into your new directory in a terminal: cd rse-classwork-2020.
+ So far, your local copy only knows about one remote (your fork). You can verify that with git remote -v.
+Add the original repository as a new remote named upstream using one of the following:
+git remote add upstream git@github.com:UCL-RITS/rse-classwork-2020.git (if you have SSH set up)
+git remote add upstream https://github.com/UCL-RITS/rse-classwork-2020.git (otherwise)
+Verify that the new remote has been added with git remove -v (it should now list upstream too).
+
+
+git bash:
+进入cd d:
+
+
+
+克隆远程库到本地：
+
+git clone git@github.com:Xuyang1998/<name of repo>.git
+
+添加关联远程库：
+
+git remote add origin git@github.com:Xuyang1998/<name of repo>.git
+
+push 本地文件进入远程库
+
+git push -u origin master
+

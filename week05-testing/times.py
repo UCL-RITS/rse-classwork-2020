@@ -27,6 +27,9 @@ def compute_overlap_time(range1, range2):
                 overlap_time.append((low, high)) #returen[(low,high)] double bracket here
     return overlap_time
 
+# def iss_passes():
+
+
 if __name__ == "__main__":
     large = time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00")
     short = time_range("2010-01-12 10:30:00", "2010-01-12 10:45:00", 2, 60)

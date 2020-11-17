@@ -5,8 +5,5 @@ python:
 install:
 - pip install requests pyyaml pytest pytest-cov
 
-load fixtures:
-- load fixture.yaml
-
 script:
 - pytest --cov-report html

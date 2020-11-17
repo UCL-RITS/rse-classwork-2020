@@ -7,12 +7,20 @@ Created on Wed Nov  4 17:47:39 2020
 
 from times import compute_overlap_time, time_range
 import pytest
+import yaml
+
+with open('fixture.yaml') as fixture_file:
+    fixture = yaml.safe_load(fixture_file)
+
+overlap_times_range_1=fixture[0]['overlap']['test_times1']
+overlap_t_r_1_first=overlap_times_range_1[0]
+overlap_t_r_1_2nd=overlap_times_range_1[1]
 
 
 @pytest.mark.parametrize("test_times1,test_times2,expected",
-                         [(time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00"),
-                           time_range("2010-01-12 10:30:00", "2010-01-12 10:45:00", 2, 60),
-                           [('2010-01-12 10:30:00', '2010-01-12 10:37:00'), ('2010-01-12 10:38:00', '2010-01-12 10:45:00')]),
+                         [(time_range(fixture[0]['overlap']['test_times1'][0],fixture[0]['overlap']['test_times1'][1]),
+                           time_range(fixture[0]['overlap']['test_times2'][0],fixture[0]['overlap']['test_times2'][1],fixture[0]['overlap']['test_times2'][2],fixture[0]['overlap']['test_times2'][3]),
+                           [(fixture[0]['overlap']['expected'][0][0], fixture[0]['overlap']['expected'][0][1]), (fixture[0]['overlap']['expected'][1][0], fixture[0]['overlap']['expected'][1][1])]),
                           (time_range("2010-01-12 10:45:00", "2010-01-12 12:00:00"),
                            time_range("2010-01-12 10:30:00", "2010-01-12 10:45:00", 2, 60),
                            []),

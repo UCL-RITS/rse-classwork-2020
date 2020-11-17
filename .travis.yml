@@ -1,9 +1,12 @@
-language: python
+language:
 python:
 - 3.8
-
+	
 install:
-  - pip install requests pyyaml pytest pytest-cov
-script:
-- pytest --cov-report html --cov=/c/PHD/Res_Sof_Eng/MPHY0021/rse-classwork-2020 
+- pip install requests pyyaml pytest pytest-cov
 
+load fixtures:
+- load fixture.yaml
+
+script:
+- pytest --cov-report html

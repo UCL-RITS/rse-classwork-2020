@@ -1,0 +1,9 @@
+.vscode/launch.json
+.vscode/settings.json
+week06/average-squares-example/average_squares/__pycache__/squares.cpython-38.pyc
+week05-testing/.vscode/settings.json
+week05-testing/__pycache__/test_times.cpython-38-pytest-6.1.1.pyc
+week05-testing/__pycache__/times.cpython-38.pyc
+week05-testing/diffusion/__pycache__/model.cpython-38.pyc
+week05-testing/diffusion/__pycache__/test_energy.cpython-38-pytest-6.1.1.pyc
+.DS_Store

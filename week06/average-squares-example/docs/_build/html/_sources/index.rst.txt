@@ -16,7 +16,6 @@ This directory contains functions to compute the weighted sum of squares and cre
    content/average-squares-docs.rst
 
 
-
 Indices and tables
 ==================
 

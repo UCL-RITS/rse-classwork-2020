@@ -2,4 +2,5 @@ Average Squares Documentation
 =============================
 
 
-.. autofunction:: squares.py
+.. automodule:: squares
+    :members:

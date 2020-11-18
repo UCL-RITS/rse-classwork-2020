@@ -1,4 +1,4 @@
-"""Computation of weighted average of squares."""
+"""Computation of weighted average of squares"""
 
 
 def average_of_squares(list_of_numbers, list_of_weights=None):

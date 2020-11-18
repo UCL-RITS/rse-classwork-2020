@@ -5,7 +5,8 @@
 
 Welcome to Generating documentation with Sphinx's documentation!
 ================================================================
-
+Work for Week06!
+Calculate the weighted average of squared numbers!
 .. toctree::
    :maxdepth: 2
    :caption: Contents:

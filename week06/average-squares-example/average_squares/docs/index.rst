@@ -10,7 +10,7 @@ Calculate the weighted average of squared numbers!
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-
+   Link to average-squares-doc <content/average-squares-docs.rst>
 
 
 Indices and tables

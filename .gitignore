@@ -138,3 +138,5 @@ dmypy.json
 cython_debug/
 
 .idea/
+week05-testing/__pycache__/test_times.cpython-37-pytest-6.1.1.pyc
+week05-testing/__pycache__/times.cpython-37.pyc

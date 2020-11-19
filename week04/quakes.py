@@ -6,7 +6,10 @@ import requests
 import json
 import os
 import math
-
+import IPython
+from IPython.display import Image
+import numpy as np
+import matplotlib.pyplot as plt
 
 def request_map_at(lat, long, zoom=10, satellite=True):
     base_url = "https://mt0.google.com/vt?"
@@ -61,6 +64,45 @@ def max_magnitude(features):
                 coord_max_mag = coordinates
     return max_mag, coord_max_mag
 
+def avg_mag(features):
+    FIRST_YEAR = 1970
+    milliseconds_in_year = 3.154e+10
+    current_year = 0
+    # avg_mag = []
+    data = {}
+    for feature in features:
+        magnitude = feature["properties"]["mag"]
+        # avg_mag.append(magnitude)
+
+        # changing time units of feature to years
+        time_in_ms = feature["properties"]["time"]
+        time_in_years = time_in_ms / milliseconds_in_year
+        year = int(FIRST_YEAR + time_in_years)
+        feature["properties"]["time"] = year
+
+        if year > current_year:
+            current_year = year
+            print(current_year)
+            print(magnitude)
+            mag = []
+            mag.append(magnitude)
+            data[str(year)] = mag
+        else:
+            mag_list = data[str(year)]
+            mag_list.append(mag_list)
+
+    data_averages= []
+    data_years = []
+    for year in data.keys():
+        mag_list = data[year]
+        average_magnitude = np.average(mag_list)
+        data_averages.append(average_magnitude)
+        data_years.append(year)
+
+    return data_averages, data_years
+
+def map_at(*args, **kwargs):
+    return request_map_at(*args, **kwargs).content
 
 def main():
     # getting earthquake data from URL
@@ -76,8 +118,18 @@ def main():
         map_response = request_map_at(coordinate[0], coordinate[1])
         url = map_response.url
         print(url[0:])
+        # Displaying image
+        map_png = map_at(*coordinate)
+        Image(map_png)
+    # Calculating average magnitude per year
+    average_magnitude,years = avg_mag(features)
 
-    # Image(map_png.content)
+    plt.bar(average_magnitude,years)
+    plt.ylabel('average magnitude')
+    plt.xlabel('year')
+    plt.show()
+
+    print(average_magnitude)
 
     print(f"The maximum magnitude is {max_mag} "
           f"and it occured at coordinates {coord_max_mag}.")

@@ -3,6 +3,9 @@
 
 def average_of_squares(list_of_numbers, list_of_weights=None):
     """ Return the weighted average of a list of values.
+
+    .. math::
+        \\frac{\sum_{i=0}^{N-1} w_i x_{i}^2}{\sum_{i=0}^{N-1} w_i}
     
     By default, all values are equally weighted, but this can be changed
     by the list_of_weights argument.

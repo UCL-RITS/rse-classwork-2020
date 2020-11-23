@@ -9,8 +9,10 @@ Welcome to average_squares's documentation!
 the purpose of the project is to learn about documenting projects
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents: average-squares-docs.rst
+   :maxdepth: 3
+   :caption: Contents:
+
+   content/average-squares-docs.rst
 
 
 

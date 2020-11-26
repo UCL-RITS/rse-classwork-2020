@@ -1,5 +1,6 @@
 """Computation of weighted average of squares."""
 
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 def average_of_squares(list_of_numbers, list_of_weights=None):
     """ Return the weighted average of a list of values.
@@ -12,7 +13,7 @@ def average_of_squares(list_of_numbers, list_of_weights=None):
     >>> average_of_squares([1, 2, 4])
     7.0
     >>> average_of_squares([2, 4], [1, 0.5])
-    6.0
+    8.0
     >>> average_of_squares([1, 2, 4], [1, 0.5])
     Traceback (most recent call last):
     AssertionError: weights and numbers must have same length
@@ -25,7 +26,7 @@ def average_of_squares(list_of_numbers, list_of_weights=None):
     else:
         effective_weights = [1] * len(list_of_numbers)
     squares = [
-        weight * number * number
+        weight * number * number / sum(effective_weights)
         for number, weight
         in zip(list_of_numbers, effective_weights)
     ]
@@ -38,7 +39,7 @@ def convert_numbers(list_of_strings):
     Example:
     --------
     >>> convert_numbers(["4", " 8 ", "15 16", " 23    42 "])
-    [4, 8, 15, 16]
+    [4.0, 8.0, 15.0, 16.0, 23.0, 42.0]
 
     """
     all_numbers = []
@@ -51,11 +52,19 @@ def convert_numbers(list_of_strings):
 
 
 if __name__ == "__main__":
-    numbers_strings = ["1","2","4"]
-    weight_strings = ["1","1","1"]        
+    parser = ArgumentParser(description="Weighted square average of a list of values",
+                            epilog='''example:
+                                python3 squares.py "5" "6" "7"
+                                python3 squares.py "5" "6" "7" -w "1" "1" "2"''',
+                            formatter_class=RawDescriptionHelpFormatter)
+
+    parser.add_argument('numbers', nargs='+', default=["1","2","4"], help="list of numbers (as strings) to average")
+    parser.add_argument('--weights', '-w', nargs='+', default=["1","1","1"], help="list of weight corresponding to each number")
+
+    arguments = parser.parse_args()  
     
-    numbers = convert_numbers(numbers_strings)
-    weights = convert_numbers(weight_strings)
+    numbers = convert_numbers(arguments.numbers)
+    weights = convert_numbers(arguments.weights)
     
     result = average_of_squares(numbers, weights)
     

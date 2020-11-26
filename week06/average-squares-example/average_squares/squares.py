@@ -55,7 +55,6 @@ if __name__ == "__main__":
     parser.add_argument('--list_of_numbers', '-n', nargs='+')
     arguments = parser.parse_args()
 
-    #numbers_strings = ["1","2","4"]
     weight_strings = ["1","1","1"]        
     
     numbers = convert_numbers(arguments.list_of_numbers)

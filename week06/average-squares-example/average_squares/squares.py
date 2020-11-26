@@ -1,6 +1,6 @@
 """Computation of weighted average of squares."""
 
-from argparse import ArgumentParser
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 def average_of_squares(list_of_numbers, list_of_weights=None):
     """ Return the weighted average of a list of values.
@@ -52,10 +52,14 @@ def convert_numbers(list_of_strings):
 
 
 if __name__ == "__main__":
-    parser = ArgumentParser(description="Weighted square average of a list of values")
+    parser = ArgumentParser(description="Weighted square average of a list of values",
+                            epilog='''example:
+                                python3 squares.py "5" "6" "7"
+                                python3 squares.py "5" "6" "7" -w "1" "1" "2"''',
+                            formatter_class=RawDescriptionHelpFormatter)
 
-    parser.add_argument('numbers', nargs='+', default=["1","2","4"])
-    parser.add_argument('--weights', '-w', nargs='+', default=["1","1","1"])
+    parser.add_argument('numbers', nargs='+', default=["1","2","4"], help="list of numbers (as strings) to average")
+    parser.add_argument('--weights', '-w', nargs='+', default=["1","1","1"], help="list of weight corresponding to each number")
 
     arguments = parser.parse_args()  
     

@@ -53,7 +53,6 @@ if __name__ == "__main__":
     parser.add_argument('--number_strings', nargs='+', help="the list of numbers")
     parser.add_argument('--weights', nargs='+', help="the list of weights")
     #numbers_strings = ["1","2","4"]
-    
     arguments= parser.parse_args()
     number_strings = arguments.number_strings
     if arguments.weights:   

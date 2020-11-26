@@ -1,5 +1,5 @@
 """Computation of weighted average of squares."""
-
+from argparse import ArgumentParser
 
 def average_of_squares(list_of_numbers, list_of_weights=None):
     """ Return the weighted average of squares of a list of values.
@@ -51,12 +51,11 @@ def convert_numbers(list_of_strings):
 
 
 if __name__ == "__main__":
-    numbers_strings = ["1","2","4"]
-    weight_strings = ["1","1","1"]        
+    parser = ArgumentParser(description='Calculating weighted average of a list of numbers')
+    parser.add_argument('numbers', nargs='+')
+    arguments = parser.parse_args()
+    numbers_int = convert_numbers(arguments.numbers)
+    message = average_of_squares(numbers_int)
+    print(message)
+
     
-    numbers = convert_numbers(numbers_strings)
-    weights = convert_numbers(weight_strings)
-    
-    result = average_of_squares(numbers, weights)
-    
-    print(result)

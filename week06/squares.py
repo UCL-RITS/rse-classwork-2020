@@ -55,9 +55,7 @@ if __name__ == "__main__":
     #numbers_strings = ["1","2","4"]
     
     arguments= parser.parse_args()
-
     number_strings = arguments.number_strings
-
     if arguments.weights:   
         weight_strings = arguments.weights
     else:

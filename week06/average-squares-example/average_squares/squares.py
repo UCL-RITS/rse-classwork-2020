@@ -2,7 +2,7 @@
 from argparse import ArgumentParser
 
 def average_of_squares(list_of_numbers, list_of_weights=None):
-    """ Return the weighted average of a list of values.
+    """ Return the weighted average of squares of a list of values.
     
     By default, all values are equally weighted, but this can be changed
     by the list_of_weights argument.
@@ -12,7 +12,7 @@ def average_of_squares(list_of_numbers, list_of_weights=None):
     >>> average_of_squares([1, 2, 4])
     7.0
     >>> average_of_squares([2, 4], [1, 0.5])
-    6.0
+    8.0
     >>> average_of_squares([1, 2, 4], [1, 0.5])
     Traceback (most recent call last):
     AssertionError: weights and numbers must have same length
@@ -25,7 +25,7 @@ def average_of_squares(list_of_numbers, list_of_weights=None):
     else:
         effective_weights = [1] * len(list_of_numbers)
     squares = [
-        weight * number * number
+        weight * number * number / sum(effective_weights)
         for number, weight
         in zip(list_of_numbers, effective_weights)
     ]
@@ -33,12 +33,12 @@ def average_of_squares(list_of_numbers, list_of_weights=None):
 
 
 def convert_numbers(list_of_strings):
-    """Convert a list of strings into numbers, ignoring whitespace.
+    """Convert a list of strings into floats, ignoring whitespace.
     
     Example:
     --------
     >>> convert_numbers(["4", " 8 ", "15 16", " 23    42 "])
-    [4, 8, 15, 16]
+    [4.0, 8.0, 15.0, 16.0, 23.0, 42.0]
 
     """
     all_numbers = []

@@ -54,10 +54,15 @@ if __name__ == "__main__":
 
     parser = ArgumentParser(description="Weighted mean of squared numbers")
     parser.add_argument("numbers", nargs='+', help="the list of numbers")
+    parser.add_argument("--weights", "-w", nargs='+', help="the list of weights")
     arguments = parser.parse_args()
 
     numbers = convert_numbers(arguments.numbers)
-    weights = [1] * len(numbers)
+    
+    if arguments.weights:
+        weights = convert_numbers(arguments.weights)
+    else:
+        weights = [1] * len(numbers)
 
     result = average_of_squares(numbers, weights)
 

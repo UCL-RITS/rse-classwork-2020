@@ -57,7 +57,6 @@ if __name__ == "__main__":
     arguments= parser.parse_args()
 
     numbers = convert_numbers(arguments.numbers[0])
-    weights = convert_numbers(weight_strings)
     
     result = average_of_squares(numbers)
     

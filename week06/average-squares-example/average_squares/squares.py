@@ -53,14 +53,16 @@ def convert_numbers(list_of_strings):
 if __name__ == "__main__":
 
     parser = ArgumentParser(description="Weighted mean of squared numbers")
-    parser.add_argument("numbers", nargs='+', help="the list of numbers")
-    parser.add_argument("--weights", "-w", nargs='+', help="the list of weights")
+    parser.add_argument("numbers", help="the lifile containing the numbers")
+    parser.add_argument("--weights", "-w", help="the optional file containing the weights")
     arguments = parser.parse_args()
 
-    numbers = convert_numbers(arguments.numbers)
+    with open(arguments.numbers) as file:
+        numbers = [int(x) for x in next(file).split()]
     
     if arguments.weights:
-        weights = convert_numbers(arguments.weights)
+        with open(arguments.weights) as file:
+            weights = [int(x) for x in next(file).split()]
     else:
         weights = [1] * len(numbers)
 

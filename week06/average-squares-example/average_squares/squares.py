@@ -51,10 +51,11 @@ def convert_numbers(list_of_strings):
 
 
 if __name__ == "__main__":
-    parser = ArgumentParser(description="Mean of squared numbers")
+    parser = ArgumentParser(description="Weighted mean of squared numbers")
     parser.add_argument("numbers", nargs='+', type=float, help="the list of numbers")
+    parser.add_argument("--weights", "-w", nargs='+', type=float, help="the list of weights")
     arguments = parser.parse_args()
 
-    result = average_of_squares(arguments.numbers)
+    result = average_of_squares(arguments.numbers, arguments.weights)
 
     print(result)

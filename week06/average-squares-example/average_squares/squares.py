@@ -52,10 +52,21 @@ def convert_numbers(list_of_strings):
 
 if __name__ == "__main__":
     parser = ArgumentParser(description="Weighted mean of squared numbers")
-    parser.add_argument("numbers", nargs='+', type=float, help="the list of numbers")
-    parser.add_argument("--weights", "-w", nargs='+', type=float, help="the list of weights")
+    parser.add_argument("numbers", help="file with the list of numbers")
+    parser.add_argument("--weights", "-w", help="file with the list of weights")
     arguments = parser.parse_args()
 
-    result = average_of_squares(arguments.numbers, arguments.weights)
+    with open(arguments.numbers, "r") as numbers_file:
+        numbers_strings = numbers_file.readlines()
+    numbers = convert_numbers(numbers_strings)
+
+    # set weights as None by default
+    weights = None
+    if arguments.weights:
+        with open(arguments.weights, "r") as weights_file:
+            weight_strings = weights_file.readlines()
+        weights = convert_numbers(weight_strings)
+
+    result = average_of_squares(numbers, weights)
 
     print(result)

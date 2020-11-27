@@ -52,11 +52,9 @@ def convert_numbers(list_of_strings):
 
 if __name__ == "__main__":
     parser = ArgumentParser(description="Mean of squared numbers")
-    parser.add_argument("numbers", nargs='+', help="the list of numbers")
+    parser.add_argument("numbers", nargs='+', type=float, help="the list of numbers")
     arguments = parser.parse_args()
 
-    numbers = convert_numbers(arguments.numbers)
-
-    result = average_of_squares(numbers)
+    result = average_of_squares(arguments.numbers)
 
     print(result)

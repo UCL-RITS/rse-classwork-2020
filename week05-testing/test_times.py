@@ -12,3 +12,10 @@ def test_given_input():
         expected = [('2010-01-12 10:30:00', '2010-01-12 10:37:00'),
                     ('2010-01-12 10:38:00', '2010-01-12 10:45:00')]
         assert result == expected
+
+
+def test_later_start_time():
+    with raises(ValueError) as exception:
+        time_range("2010-01-12 10:00:00", "2010-01-10 12:00:00")
+        exception.match("end time larger than start time")
+

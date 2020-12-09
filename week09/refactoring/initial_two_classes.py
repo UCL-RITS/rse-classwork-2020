@@ -48,6 +48,7 @@ class Group:
             self.connections[name1].update(new_entry)
         else:
             self.connections[name1] = new_entry
+        self.connections[name1].update(new_entry)
         if reciprocal == True:
             new_entry2 = {name1 : relation}
             if name2 in self.connections:

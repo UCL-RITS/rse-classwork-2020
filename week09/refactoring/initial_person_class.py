@@ -51,3 +51,4 @@ if __name__ == "__main__":
     assert average_age(my_group) == 28.75, "Average age of the group is incorrect!"
     assert len(nash.connections) == 1, "Nash should only have one relation "
     print("All assertions have passed!")
+    #

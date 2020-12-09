@@ -21,7 +21,7 @@ class Person:
 
 def average_age(group):
     """Compute the average age of the group's members."""
-    all_ages = [person.age for person in group]
+    all_ages = [person["age"] for person in group]
     return sum(all_ages) / len(group)
 
 

@@ -20,40 +20,6 @@ def add_person(name, age, job, relations):
     group[name] = new_person
 
 
-# group = {
-#     "Jill": {
-#         "age": 26,
-#         "job": "biologist",
-#         "relations": {
-#             "Zalika": "friend",
-#             "John": "partner"
-#         }
-#     },
-#     "Zalika": {
-#         "age": 28,
-#         "job": "artist",
-#         "relations": {
-#             "Jill": "friend",
-#         }
-#     },
-#     "John": {
-#         "age": 27,
-#         "job": "writer",
-#         "relations": {
-#             "Jill": "partner"
-#         }
-#     }
-# }
-
-# nash_relations = {
-#     "John": "cousin",
-#     "Zalika": "landlord"
-# }
-
-# add_person("Nash", 34, "chef", nash_relations)
-
-# forget("Nash", "John")
-
 if __name__ == "__main__":
     group={}
     Jill_relations = {

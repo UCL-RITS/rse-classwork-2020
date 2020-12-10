@@ -18,7 +18,7 @@ class Group:
 
     def size(self):
         """Return how many people are in the group."""
-        pass
+        return len(self.members)
 
     def contains(self, name):
         """Check whether the group contains a person with the given name.
@@ -32,17 +32,34 @@ class Group:
 
     def number_of_connections(self, name):
         """Find the number of connections that a person in the group has"""
-        pass
+        if not self.contains(name):
+            raise ValueError(f"I don't know about {name}.")
+        return sum(1 for (first, second) in self.connections if first == name)
 
     def connect(self, name1, name2, relation, reciprocal=True):
         """Connect two given people in a particular way.
         Optional reciprocal: If true, will add the relationship from name2 to name 1 as well
         """
-        pass
+        if not self.contains(name1):
+            raise ValueError(f"I don't know who {name1} is.")
+        if not self.contains(name2):
+            raise ValueError(f"I don't know who {name2} is.")
+        if (name1, name2) in self.connections:
+            raise ValueError(f"{name1} already knows {name2} as a "
+                             f"{self.connections[(name1, name2)]}")
+        self.connections[(name1, name2)] = relation
+        if reciprocal:
+            self.connections[(name2, name1)] = relation
 
     def forget(self, name1, name2):
         """Remove the connection between two people."""
-        pass
+        if not self.contains(name1):
+            raise ValueError(f"I don't know who {name1} is.")
+        if not self.contains(name2):
+            raise ValueError(f"I don't know who {name2} is.")
+        if (name1, name2) not in self.connections:
+            raise ValueError(f"{name1} does not know {name2} yet.")
+        self.connections.pop((name1, name2))
 
     def average_age(self):
         """Compute the average age of the group's members."""
@@ -55,8 +72,14 @@ if __name__ == "__main__":
     my_group = Group()
     # ...then add the group members one by one...
     my_group.add_person("Jill", 26, "biologist")
+    my_group.add_person("Zalika", 28, "artist")
+    my_group.add_person("John", 27, "writer")
+    my_group.add_person("Nash", 34, "chef")
     # ...then their connections
     my_group.connect("Jill", "Zalika", "friend")
+    my_group.connect("Jill", "John", "partner")
+    my_group.connect("Nash", "John", "cousin", reciprocal=False)
+    my_group.connect("Nash", "Zalika", "landlord", reciprocal=False)
     # ... then forget Nash and John's connection
     my_group.forget("Nash", "John")
 

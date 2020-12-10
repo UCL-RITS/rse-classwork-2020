@@ -20,41 +20,42 @@ def add_person(name, age, job, relations):
     group[name] = new_person
 
 
-group = {
-    "Jill": {
-        "age": 26,
-        "job": "biologist",
-        "relations": {
-            "Zalika": "friend",
-            "John": "partner"
-        }
-    },
-    "Zalika": {
-        "age": 28,
-        "job": "artist",
-        "relations": {
-            "Jill": "friend",
-        }
-    },
-    "John": {
-        "age": 27,
-        "job": "writer",
-        "relations": {
-            "Jill": "partner"
-        }
-    }
-}
 
-nash_relations = {
-    "John": "cousin",
-    "Zalika": "landlord"
-}
-
-add_person("Nash", 34, "chef", nash_relations)
-
-forget("Nash", "John")
 
 if __name__ == "__main__":
+    group = {
+        "Jill": {
+            "age": 26,
+            "job": "biologist",
+            "relations": {
+                "Zalika": "friend",
+                "John": "partner"
+            }
+        },
+        "Zalika": {
+            "age": 28,
+            "job": "artist",
+            "relations": {
+                "Jill": "friend",
+            }
+        },
+        "John": {
+            "age": 27,
+            "job": "writer",
+            "relations": {
+                "Jill": "partner"
+            }
+        }
+    }
+
+    nash_relations = {
+        "John": "cousin",
+        "Zalika": "landlord"
+    }
+
+    add_person("Nash", 34, "chef", nash_relations)
+
+    forget("Nash", "John")
     assert len(group) == 4, "Group should have 4 members"
     assert average_age() == 28.75, "Average age of the group is incorrect!"
     assert len(group["Nash"]["relations"]) == 1, "Nash should only have one relation"

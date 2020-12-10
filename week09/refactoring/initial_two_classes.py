@@ -64,9 +64,11 @@ if __name__ == "__main__":
     my_group.add_person("Nash",34,"chef")
     # ...then their connections
     my_group.connect("Jill", "Zalika", "friend")
+    print(my_group.connections)
     my_group.connect("Jill", "John", "partner")
-    my_group.connect("zalika", "Jill", "friend")
-    my_group.connect("John", "Jill", "partner")
+    print(my_group.connections)
+    # my_group.connect("Zalika", "Jill", "friend")
+    # my_group.connect("John", "Jill", "partner")
     my_group.connect("Nash", "John", "cousin")
     my_group.connect("Nash", "Zalika", "landlord")
     # ... then forget Nash and John's connection

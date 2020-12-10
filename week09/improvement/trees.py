@@ -2,16 +2,24 @@
 
 from math import sin, cos
 from matplotlib import pyplot as plt
-s=1
-d=[[0,1,0]]
-plt.plot([0,0],[0,1])
+
+
+scale_factor=1 # scale factor of branch length
+current_node=[[0,1,0]] # initial node location[0][1], inital angle[2]
+plt.plot([0,0],[0,1]) # plotting the stem of the tree
+
+
 for i in range(5):
-    n=[]
+    nodes=[]
     for j in range(len(d)):
-        n.append([d[j][0]+s*sin(d[j][2]-0.1), d[j][1]+s*cos(d[j][2]-0.1), d[j][2]-0.1])
-        n.append([d[j][0]+s*sin(d[j][2]+0.1), d[j][1]+s*cos(d[j][2]+0.1), d[j][2]+0.1])
-        plt.plot([d[j][0], n[-2][0]],[d[j][1], n[-2][1]])
-        plt.plot([d[j][0], n[-1][0]],[d[j][1], n[-1][1]])
-    d=n
-    s*=0.6
+        # works out the location of the next nodes
+        nodes.append([current_node[j][0]+scale_factor*sin(d[j][2]-0.1), current_node[j][1]+scale_factor*cos(current_node[j][2]-0.1), current_node[j][2]-0.1])
+        nodes.append([current_node[j][0]+scale_factor*sin(d[j][2]+0.1), current_node[j][1]+scale_factor*cos(current_node[j][2]+0.1), current_node[j][2]+0.1])
+        # plots the branches from previous nodes to next nodes
+        plt.plot([current_node[j][0], nodes[-2][0]],[current_node[j][1], nodes[-2][1]])
+        plt.plot([current_node[j][0], nodes[-1][0]],[current_node[j][1], nodes[-1][1]])
+    current_node=nodes
+    scale_factor*=0.6
+
+
 plt.savefig('tree.png')

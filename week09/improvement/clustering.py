@@ -1,7 +1,7 @@
 """This code implements the k-means clustering algorithm for 2 dimensions."""
 
-from math import *
-from random import *
+from math import sqrt
+from random import randrange
 
 # PARAMETERS
 k=3 # number clusters

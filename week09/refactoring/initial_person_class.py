@@ -16,6 +16,7 @@ class Person:
 
     def forget(self, person):
         """Removes any connections to a person"""
+        self.connections.pop(person, None)
         pass
 
 
@@ -26,19 +27,26 @@ def average_age(group):
 
 
 if __name__ == "__main__":
-    # ...then create the group members one by one...
-    jill = Person("Jill", 26, "biologist")
+    Jill = Person("Jill", 26, "biologist")
+    Zalika = Person("Zalika", 28, "artist")
+    John = Person("John", 27, "writer")
+    Nash = Person("Nash", 34, "chef")
 
-    # ...then add the connections one by one...
-    # Note: this will fail from here if the person objects aren't created
-    jill.add_connection(zalika, "friend")
+    Jill.add_connection(Zalika, "friend")
+    Jill.add_connection(John, "partner")
+    Zalika.add_connection(Jill, "friend")
+    John.add_connection(Jill, "partner")
+    Nash.add_connection(John, "cousin")
+    Nash.add_connection(Zalika, "landlord")
 
-    # ... then forget Nash and John's connection
-    nash.forget(john)
+
+    Nash.forget(John)
+    John.forget(Jill)
+
     # Then create the group
-    my_group = {jill, zalika, john, nash}
+    my_group = {Jill, Zalika, John, Nash}
 
     assert len(my_group) == 4, "Group should have 4 members"
     assert average_age(my_group) == 28.75, "Average age of the group is incorrect!"
-    assert len(nash.connections) == 1, "Nash should only have one relation "
+    assert len(Nash.connections) == 1, "Nash should only have one relation "
     print("All assertions have passed!")

@@ -15,7 +15,7 @@ def point_in_circle(xy, radius=1):
     True
 
     """
-    r = np.sqrt((xy**2).sum(axis=1))
+    r = np.sqrt(np.sum(xy**2, axis=1))
     return r <= radius
 
 def calculate_pi_timeit(points):
@@ -30,7 +30,7 @@ def calculate_pi_timeit(points):
         # Create a n,2 array instead
         within_circle = point_in_circle(np.random.rand(points, 2))
                          
-        return 4 * sum(within_circle)/points
+        return 4 * np.sum(within_circle)/points
     return calculate_pi
 
 

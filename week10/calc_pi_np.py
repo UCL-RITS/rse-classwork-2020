@@ -60,7 +60,7 @@ def command():
     result = timeit.repeat(calc_pi, number=arguments.number, repeat=arguments.repeat)
     
     best = min(result) / arguments.number
-    print(f"{arguments.number} loops, best of {arguments.repeat}: {format_time(best)} per loop")
+    #print(f"{arguments.number} loops, best of {arguments.repeat}: {format_time(best)} per loop")
 
 
 if __name__ == '__main__':

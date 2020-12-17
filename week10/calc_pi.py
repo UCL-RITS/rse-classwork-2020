@@ -29,7 +29,7 @@ def calculate_pi_timeit(points):
         """
         within_circle = [point_in_circle(random.random(), random.random())
                          for _ in range(points)]
-        print(within_circle)
+        # print(within_circle)
         return 4 * sum(within_circle)/points
    
     return calculate_pi

@@ -36,7 +36,7 @@ def calculate_pi_timeit(points):
         """
 
         within_circle = point_in_circle(np.random.rand(points, 2))
-        return 4 * sum(within_circle)/points
+        return 4 * np.sum(within_circle)/points
     return calculate_pi
 
 

@@ -42,7 +42,7 @@ def command():
 
     parser = argparse.ArgumentParser(description="Calculates an approximate value of PI and how long it takes",
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('--npoints', '-np', default=10, type=int, help="Number of random points to use")
+    parser.add_argument('--npoints', '-np', default=10_000, type=int, help="Number of random points to use")
     parser.add_argument('--number', '-n', default=100, type=int, help="Number of times to execute the calculations")
     parser.add_argument('--repeat', '-r', default=5, type=int, help="How many times to repeat the timer")
     # parser.print_help()

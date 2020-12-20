@@ -1,0 +1,17 @@
+# this is a Travis CI file to perform automated testing (Continuous Integration)
+
+# Defining the language to be used
+language: python
+
+# Version of Python to read file in
+python:
+  - "3.7"
+  - "3.8"
+
+# command to install dependecies
+install:
+  - pip install requests pyyaml pytest pytest-cov
+
+# command to run tests
+script:
+  - pytest --cov-report html

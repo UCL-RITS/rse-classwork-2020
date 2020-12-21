@@ -1,6 +1,7 @@
 """Exercise #61 - Code"""
 
 import datetime
+import requests
 
 #function to convert the time range into strings of start ta and end tb
 def time_range(start_time, end_time, number_of_intervals=1, gap_between_intervals_s=0):
@@ -37,6 +38,26 @@ def compute_overlap_time(range1, range2):
             #note: when there is no overlap, overlap_time = [] stays
     return overlap_time
 
+# Mocking the ISS times from: http://open-notify.org/Open-Notify-API/ISS-Pass-Times/
+def iss_passes(lat, lon, n=5):
+    """
+    Returns a time_range-like output for intervals of time when the International Space Station
+    passes at a given location and for a number of days from today.
+    """
+    iss_request = requests.get("http://api.open-notify.org/iss-pass.json",
+                               params={
+                                   "lat": lat,
+                                   "lon": lon,
+                                   "n": n})
+
+    if iss_request.status_code != 200:
+        # if the request failed for some reason
+        return []
+    response = iss_request.json()['response']
+    #To convert unix time stamps use datetime.datetime.fromtimestamp function
+    return [(datetime.datetime.fromtimestamp(x['risetime']).strftime("%Y-%m-%d %H:%M:%S"),
+             (datetime.datetime.fromtimestamp(x['risetime'] + x['duration'])).strftime("%Y-%m-%d %H:%M:%S"))
+            for x in response]
 
 # this only runs if this module is run directly, if it is imported somewhere then __name__ == times instead!!
 if __name__ == "__main__":
@@ -52,3 +73,6 @@ if __name__ == "__main__":
     overlap_t = compute_overlap_time(large, short)
     print(f"The resulting overlaps are {overlap_t}.")
         #[('2010-01-12 10:30:00', '2010-01-12 10:37:00'), ('2010-01-12 10:38:00', '2010-01-12 10:45:00')]
+
+    # ISS passes over London
+    print("The ISS passes over London:", iss_passes(51.5074, -0.1278))

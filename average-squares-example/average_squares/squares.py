@@ -53,8 +53,15 @@ def convert_numbers(list_of_strings):
 if __name__ == "__main__":
     parser = ArgumentParser(description="Weighted averaged of squared numbers")
     parser.add_argument("numbers", type = int, nargs='+', help = "the list of numbers")
+    parser.add_argument("--weights", "-w", type=int, nargs='+', help="the list of weights")
     arguments = parser.parse_args()
     numbers = arguments.numbers    
-    result = average_of_squares(numbers)
+
+    if arguments.weights:
+        weights = arguments.weights
+    else:
+        weights = [1] * len(numbers)
+
+    result = average_of_squares(numbers, weights)
     
     print(result)

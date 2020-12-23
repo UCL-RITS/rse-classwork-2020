@@ -16,7 +16,10 @@ class Person:
 
     def forget(self, person):
         """Removes any connections to a person"""
-        pass
+        # raise error if the person(s) has not known each other.
+        if person not in self.connections:
+            raise ValueError(f"I don't know about {person.name}")
+        self.connections.pop(person)
 
 
 def average_age(group):
@@ -28,13 +31,23 @@ def average_age(group):
 if __name__ == "__main__":
     # ...then create the group members one by one...
     jill = Person("Jill", 26, "biologist")
+    zalika = Person("Zalika", 28, "artist")
+    john = Person("John", 27, "writer")
+    nash = Person("Nash", 34, "chef")
 
     # ...then add the connections one by one...
     # Note: this will fail from here if the person objects aren't created
     jill.add_connection(zalika, "friend")
-
+    zalika.add_connection(jill, "friend")
+    jill.add_connection(john, "partner")
+    john.add_connection(john, "partner")
+    nash.add_connection(john, "cousin")
+    john.add_connection(nash, "cousin")
+    nash.add_connection(zalika, "Landlord")
+    
     # ... then forget Nash and John's connection
     nash.forget(john)
+
     # Then create the group
     my_group = {jill, zalika, john, nash}
 

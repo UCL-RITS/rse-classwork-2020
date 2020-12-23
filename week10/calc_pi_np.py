@@ -2,10 +2,11 @@ import argparse
 import math
 import random
 import timeit
+import numpy as np
 
 from utils import format_time
 
-def point_in_circle(x, y, radius=1):
+def point_in_circle(array, radius=1):
     """
     Checks whether a point (x, y) is part of a circle with a set radius.
 
@@ -15,7 +16,13 @@ def point_in_circle(x, y, radius=1):
     True
 
     """
-    r = math.sqrt(x ** 2 + y ** 2)
+    squared = np.square(array)
+
+    added= squared[:, 0] + squared[:, 1]
+
+    r=np.sqrt(added)
+    # r = np.sqrt(np.square(array).sum(axis=1))
+
     return r <= radius
 
 def calculate_pi_timeit(points):
@@ -27,12 +34,27 @@ def calculate_pi_timeit(points):
         """
         Calculates an approximated value of pi by the Monte Carlo method.
         """
-        within_circle = [point_in_circle(random.random(), random.random())
-                         for _ in range(points)]
+        array = np.random.rand(points,2)
+        within_circle = point_in_circle(array)
+                         
         # print(within_circle)
         return 4 * sum(within_circle)/points
    
     return calculate_pi
+
+    #     array=np.zeros(2)
+    #     for _ in range(points):
+    #         array[0]=random.random()
+    #         array[1]=random.random()
+    #         within_circle = point_in_circle(array)
+    #         print(within_circle)
+    #         if within_circle == True:
+    #             within_circle=1
+    #         else:
+    #             within_circle=0
+    #         # print(within_circle)
+    #     return 4 * sum(within_circle)/points
+    # return calculate_pi
 
 
 def command():
@@ -47,6 +69,8 @@ def command():
     parser.add_argument('--repeat', '-r', default=5, type=int, help="How many times to repeat the timer")
     # parser.print_help()
     arguments = parser.parse_args()
+
+
 
     calc_pi = calculate_pi_timeit(arguments.npoints)
     print(f"pi = {calc_pi()} (with {arguments.npoints})")

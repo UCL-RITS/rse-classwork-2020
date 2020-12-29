@@ -16,8 +16,8 @@ if RANK == 0:
     parser.add_argument('--npoints', '-np', default=10_000, type=int, help="Number of random points to use")
     arguments = parser.parse_args()
     print(arguments.npoints)
-    points = arguments.npoints // SIZE
-    extra = arguments.npoints % SIZE
+    points = arguments.npoints // SIZE # rounds down to nearest int
+    extra = arguments.npoints % SIZE # remainder
 else:
     points = None
 

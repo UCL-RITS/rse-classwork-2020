@@ -14,7 +14,6 @@ This is a sphinx document that will provide information about the squares.py fil
    /content/average-squares-docs
 
 
-
 Indices and tables
 ==================
 

@@ -14,7 +14,6 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('C://PHD//Res_Sof_Eng//MPHY0021//rse-classwork-2020//week06//average-squares-example//average_squares'))
 
-
 # -- Project information -----------------------------------------------------
 
 project = 'squares_sphinx_documentation'
